@@ -25,7 +25,15 @@ header a {
   font-size: 0.9em;
   color: whitesmoke;
 }
-
+nav{
+  background-color: black;
+}
+nav a{
+  color: white;
+}
+nav button{
+  color:black !important;
+}
 header .nav-item:last-child {
   padding-right: 10.5em;
 }
