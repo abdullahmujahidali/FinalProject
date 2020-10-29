@@ -24,11 +24,16 @@ let nCount = selector => {
 let a = 0;
 $(window).scroll(function () {
   // The .offset() method allows us to retrieve the current position of an element  relative to the document
-  let oTop = $(".numbers").offset().top - window.innerHeight;
+  let oTop = ($(".numbers").offset().top - window.innerHeight || { "top": NaN }).top;
+  if (isNaN(oTop)) {
+    alert("something is wrong, no top");
+}
+else{
   if (a === 0 && $(window).scrollTop() >= oTop) {
     a++;
     nCount(".rect > h1");
   }
+}
 });
 
 
@@ -50,3 +55,7 @@ $(window).scroll(function () {
     navbar.removeClass("sticky");
   }
 });
+<script>
+
+
+</script>

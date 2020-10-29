@@ -1,7 +1,6 @@
 import React from "react"
 import {BrowserRouter,Route} from "react-router-dom"
 import NavBar from "./components/Navbar"
-import Footer from "./components/Footer"
 import Home from "./components/screens/Home"
 import Profile from "./components/screens/Profile"
 import SignIn from "./components/screens/SignIn"
@@ -26,7 +25,7 @@ function App() {
       <Profile />
     </Route>
 
-     <Footer />
+
    </BrowserRouter>
   );
 }
