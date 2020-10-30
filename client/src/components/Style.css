@@ -271,7 +271,7 @@ header .container .col-md-7 p {
 footer {
   background: rgba(0, 0, 0, 0.815);
   overflow-x: hidden;
-  padding: 14vmin 18vmin;
+  padding: 5vmin 14vmin 8vmin 18vmin;
 }
 
 footer p > span {
@@ -307,6 +307,7 @@ footer .column i + i {
   z-index: 9999;
   transition: all 1.5s ease;
 }
+
 
 
 @media only screen and (max-width: 768px) {
@@ -364,4 +365,136 @@ footer .column i + i {
   }
 }
 
+.icon-cog {
+  color: white;
+}
 
+
+
+
+.image-container{
+  background: url('https://ak.picdn.net/shutterstock/videos/20768185/thumb/1.jpg') center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.form-container{
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+}
+
+.form-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.form-box h4{
+  font-weight: bold;
+  color: #fff;
+}
+
+.form-box .form-input {
+  position: relative;
+}
+
+.form-box .form-input input{
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background: white;
+  padding-left: 45px;
+}
+
+.form-box .form-input span{
+  position: absolute;
+  top: 8px;
+  padding-left: 20px;
+  color: #777;
+}
+
+.form-box .form-input input::placeholder{
+  padding-left: 0px;
+}
+
+.form-box .form-input input:focus,
+.form-box .form-input input:valid{
+  border-bottom: 2px solid #dc3545;
+}
+
+.form-box input[type="checkbox"]:not(:checked) + label:before{
+  background: transparent;
+  border: 2px solid #fff;
+  width: 15px;
+  height: 15px;
+}
+
+.form-box .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before{
+  background-color: #dc3545;
+  border: 0px;
+}
+
+.form-box button[type="submit"]{
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  transition: 0.5s;
+}
+
+.form-box button[type="submit"]:hover{
+  -webkit-box-shadow: 0px 9px 10px -2px rgba(0,0,0,0.55);
+  -moz-box-shadow: 0px 9px 10px -2px rgba(0,0,0,0.55);
+  box-shadow: 0px 9px 10px -2px rgba(0,0,0,0.55);
+}
+
+.forget-link, .register-link, .login-link{
+  color: #fff;
+  font-weight: bold;
+}
+
+.forget-link:hover, .register-link:hover, .login-link:hover{
+  color:purple;
+}
+
+.form-box .btn-social{
+  color: #fff;
+  border: 0;
+  margin-bottom: 10px;
+}
+
+.form-box .btn-facebook{
+  background: #4866a8;
+}
+
+.form-box .btn-google{
+  background: #da3f34
+}
+
+.form-box .btn-twitter{
+  background: #33ccff;
+}
+
+.form-box .btn-facebook:hover{
+  color: #fff;
+  background: #3d5785;
+}
+
+.form-box .btn-google:hover{
+  background: #bf3b31;
+  color: #fff;
+}
+
+.form-box .btn-twitter:hover{
+  background: #2eb7e5;
+  color: #fff;
+}

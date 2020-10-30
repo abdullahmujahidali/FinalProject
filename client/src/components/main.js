@@ -21,41 +21,57 @@ let nCount = selector => {
   });
 };
 
-let a = 0;
-$(window).scroll(function () {
-  // The .offset() method allows us to retrieve the current position of an element  relative to the document
-  let oTop = ($(".numbers").offset().top - window.innerHeight || { "top": NaN }).top;
-  if (isNaN(oTop)) {
-    alert("something is wrong, no top");
-}
-else{
-  if (a === 0 && $(window).scrollTop() >= oTop) {
-    a++;
-    nCount(".rect > h1");
-  }
-}
-});
+// let a = 0;
+// $(window).scroll(function () {
+//   // The .offset() method allows us to retrieve the current position of an element  relative to the document
+//   let oTop = $(".numbers").offset().top - window.innerHeight 
+
+//   if (a === 0 && $(window).scrollTop() >= oTop) {
+//     a++;
+//     nCount(".rect > h1");
+//   }
+
+// });
 
 
 
-/**
- *
- *  sticky navigation
- *
- */
+// /**
+//  *
+//  *  sticky navigation
+//  *
+//  */
 
-let navbar = $(".navbar");
+// let navbar = $(".navbar");
 
-$(window).scroll(function () {
-  // get the complete hight of window
-  let oTop = $(".section-2").offset().top - window.innerHeight;
-  if ($(window).scrollTop() > oTop) {
-    navbar.addClass("sticky");
-  } else {
-    navbar.removeClass("sticky");
-  }
-});
-<script>
+// $(window).scroll(function () {
+//   // get the complete hight of window
+//   let oTop = $(".section-2").offset().top - window.innerHeight;
+//   if ($(window).scrollTop() > oTop) {
+//     navbar.addClass("sticky");
+//   } else {
+//     navbar.removeClass("sticky");
+//   }
+// });
+// <script>
+
+// {/* document.querySelector('.img-btn').addEventListener('click', function(){
+//   document.querySelector('.cont').classList.toggle('s-signup')
+// }
+// ); */}
 
 
-</script>
+// </script>
+
+// const signUpButton = document.getElementById('signUp');
+// const signInButton = document.getElementById('signIn');
+// const container = document.getElementById('container');
+
+// signUpButton.addEventListener('click', () => {
+
+//   container.classList.add("right-panel-active");
+  
+// });
+
+// signInButton.addEventListener('click', () => {
+// 	container.classList.remove("right-panel-active");
+// });
