@@ -5,7 +5,9 @@ import {Link} from "react-router-dom"
 
 
 const YourEffect = styled.div`
-
+center{
+	position:center;
+}
 
 `
 
@@ -46,26 +48,9 @@ const SignUp =()=>{
 							</div>
 						</div>
 						<div className="text-left mb-3">
-							<button type="submit" className="btn">Register</button>
+							<button type="submit" className="btn center">Register</button>
 						</div>
-						<div className="text-white mb-3">or register with</div>
-						<div className="row mb-3">
-							<div className="col-4">
-								<Link to="" className="btn btn-block btn-social btn-facebook">
-									<i className="fa fa-facebook"></i>
-								</Link>
-							</div>
-							<div className="col-4">
-								<Link to="" className="btn btn-block btn-social btn-google">
-									<i className="fa fa-google"></i>
-								</Link>
-							</div>
-							<div className="col-4">
-								<Link to="" className="btn btn-block btn-social btn-twitter">
-									<i className="fa fa-twitter"></i>
-								</Link>
-							</div>
-						</div>
+						
 						<div className="text-white">Already have an account?
 							<Link to="/signin" className="login-link">Login here</Link>
 						</div>

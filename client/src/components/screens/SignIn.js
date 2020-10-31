@@ -44,24 +44,7 @@ const SignIn =()=>{
 						<div class="text-left mb-3">
 							<button type="submit" class="btn">Login</button>
 						</div>
-						<div class="text-white mb-3">or login with</div>
-						<div class="row mb-3">
-							<div class="col-4">
-								<a href="" class="btn btn-block btn-social btn-facebook">
-									<i class="fa fa-facebook"></i>
-								</a>
-							</div>
-							<div class="col-4">
-								<a href="" class="btn btn-block btn-social btn-google">
-									<i class="fa fa-google"></i>
-								</a>
-							</div>
-							<div class="col-4">
-								<a href="" class="btn btn-block btn-social btn-twitter">
-									<i class="fa fa-twitter"></i>
-								</a>
-							</div>
-						</div>
+					
 						<div class="text-white">Don't have an account?
 							<a href="register.html" class="register-link">Register here</a>
 						</div>

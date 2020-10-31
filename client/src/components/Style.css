@@ -466,35 +466,3 @@ footer .column i + i {
   color:purple;
 }
 
-.form-box .btn-social{
-  color: #fff;
-  border: 0;
-  margin-bottom: 10px;
-}
-
-.form-box .btn-facebook{
-  background: #4866a8;
-}
-
-.form-box .btn-google{
-  background: #da3f34
-}
-
-.form-box .btn-twitter{
-  background: #33ccff;
-}
-
-.form-box .btn-facebook:hover{
-  color: #fff;
-  background: #3d5785;
-}
-
-.form-box .btn-google:hover{
-  background: #bf3b31;
-  color: #fff;
-}
-
-.form-box .btn-twitter:hover{
-  background: #2eb7e5;
-  color: #fff;
-}
