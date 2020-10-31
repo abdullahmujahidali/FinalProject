@@ -2,6 +2,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 import './Style.css';
 import "./main.js"
+// import {} from "../components/screens/Home"
 const NavBar=()=>{
     return (
         <div className="container-fluid p-0">
@@ -25,10 +26,10 @@ const NavBar=()=>{
                 <Link className="nav-link" to="/section-1">ABOUT</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">PRICE</a>
+                <Link className="nav-link" to="/">PRICE</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">CONTACT</a>
+                <Link className="nav-link" to="/">CONTACT</Link>
               </li>
               <button type="button" className="btn btn-warning">
                <Link to="/SignIn"> <i className="fas fa-sign-in-alt  mx-2"></i></Link>

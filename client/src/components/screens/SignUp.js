@@ -1,6 +1,7 @@
 import React from "react"
 import styled from 'styled-components';
 import "../../components/main.js"
+import {Link} from "react-router-dom"
 
 
 const YourEffect = styled.div`
@@ -50,23 +51,23 @@ const SignUp =()=>{
 						<div className="text-white mb-3">or register with</div>
 						<div className="row mb-3">
 							<div className="col-4">
-								<a href="" className="btn btn-block btn-social btn-facebook">
+								<Link to="" className="btn btn-block btn-social btn-facebook">
 									<i className="fa fa-facebook"></i>
-								</a>
+								</Link>
 							</div>
 							<div className="col-4">
-								<a href="" className="btn btn-block btn-social btn-google">
+								<Link to="" className="btn btn-block btn-social btn-google">
 									<i className="fa fa-google"></i>
-								</a>
+								</Link>
 							</div>
 							<div className="col-4">
-								<a href="" className="btn btn-block btn-social btn-twitter">
+								<Link to="" className="btn btn-block btn-social btn-twitter">
 									<i className="fa fa-twitter"></i>
-								</a>
+								</Link>
 							</div>
 						</div>
 						<div className="text-white">Already have an account?
-							<a href="login.html" className="login-link">Login here</a>
+							<Link to="/signin" className="login-link">Login here</Link>
 						</div>
 					</form>
 				</div>

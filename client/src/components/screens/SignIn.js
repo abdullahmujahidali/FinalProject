@@ -8,8 +8,6 @@ const YourEffect = styled.div`
 
 `
 
-
-
 const SignIn =()=>{
     return (
       <YourEffect>
