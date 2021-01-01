@@ -1,18 +1,56 @@
-import React from "react"
+import React,{useState} from "react"
 import styled from 'styled-components';
 import "../../components/main.js"
-import {Link} from "react-router-dom"
-
-
+import {Link,useHistory} from "react-router-dom"
+import M from "materialize-css"
 const YourEffect = styled.div`
 center{
 	position:center;
+	
 }
 
 `
+function ValidateEmail(mail) 
+{
+ if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
+  {
+	M.toast({html: 'Invalid email', classes: '#0d47a1 blue darken-4'});
+  }
 
-
+    return (true)
+}
 const SignUp =()=>{
+	const history=useHistory()
+	const [name,setName]=useState("")
+	const [password,setPassword]=useState("")
+	const [email,setEmail]=useState("")
+
+	const PostData =()=>{
+		if(!ValidateEmail(email)){
+			fetch("/signup",{
+				method:"post",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify({
+					name,
+					password,
+					email
+				})
+			}).then(res=>res.json())
+			.then(data=>{
+				if(data.error){
+					M.toast({html: data.error, classes: '#0d47a1 blue darken-4'});
+				}
+				else{
+					M.toast({html: data.message, classes: '#0d47a1 blue darken-4'});
+					history.push('/SignIn')
+				}
+			})
+		}
+		
+	}
+
     return (
       <YourEffect>
        	<div className="container-fluid">
@@ -29,15 +67,16 @@ const SignUp =()=>{
 					<form>
 						<div className="form-input">
 							<span><i className="fa fa-user"></i></span>
-							<input type="text" placeholder="Full Name" required />
+							<input type="text" placeholder="Full Name" required value={name} onChange = {(e)=>setName(e.target.value)} />
+
 						</div>
 						<div className="form-input">
 							<span><i className="fa fa-envelope"></i></span>
-							<input type="email" placeholder="Email Address" required />
+							<input type="email" placeholder="Email Address" required value={email} onChange = {(e)=>setEmail(e.target.value)}/>
 						</div>
 						<div className="form-input">
 							<span><i class="fa fa-lock"></i></span>
-							<input type="password" placeholder="Password" required />
+							<input type="password" placeholder="Password" required value={password} onChange = {(e)=>setPassword(e.target.value)} />
 						</div>
 						<div className="row mb-3">
 							<div className="col-12 d-flex">
@@ -48,7 +87,7 @@ const SignUp =()=>{
 							</div>
 						</div>
 						<div className="text-left mb-3">
-							<button type="submit" className="btn center">Register</button>
+							<button type="submit" className="btn center" onClick={()=>PostData()}>Register</button>
 						</div>
 						
 						<div className="text-white">Already have an account?

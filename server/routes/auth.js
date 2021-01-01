@@ -26,7 +26,7 @@ router.post("/signup", (req, res) => {
                     })
                     user.save()
                         .then(user => {
-                            res.json({ message: "User Saved Sucessfully" })
+                            res.json({ message: name+' Joined BigBrains' })
                         })
                         .catch(error => {
                             console.log(error)
