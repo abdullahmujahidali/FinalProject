@@ -1,58 +1,92 @@
-import React from "react"
+import React,{useState} from "react"
 import styled from 'styled-components';
-import "../../components/main.js"
-import "../../components/screens/Home"
-
+import "../main.js"
+import "./Home"
+import {Link,useHistory} from "react-router-dom"
+import M from "materialize-css"
 const YourEffect = styled.div`
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 `
 
 const SignIn =()=>{
+	const history=useHistory()
+	const [password,setPassword]=useState("")
+	const [email,setEmail]=useState("")
+
+	const PostData =()=>{
+		if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){	
+			M.toast({html: 'Invalid email', classes: '#0d47a1 blue darken-4'})
+		   return
+	   }  
+			fetch("/signin",{
+				method:"post",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify({
+					password,
+					email
+				})
+			}).then(res=>res.json())
+			.then(data=>{
+				console.log(data)
+				if(data.error){
+					M.toast({html: data.error, classes: '#0d47a1 blue darken-4'});
+				}
+				else{
+					M.toast({html: "Login Success", classes: '#0d47a1 blue darken-4'});
+					history.push('/PostHome')
+				}
+			}).catch(err=>{
+				console.log(err)
+			})
+		
+	}
     return (
       <YourEffect>
-     <div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-6 col-md-6 form-container">
-				<div class="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box text-center">
-					<div class="logo mt-5 mb-3">
-          <i className="fas fa-brain fa-8x mx-3 icon-cog"></i>
+     <div className="container-fluid">
+		<div className="row">
+			<div className="col-lg-6 col-md-6 form-container">
+				<div className="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box text-center">
+					<div className="logo mt-5 mb-3">
+          <i classNameName="fas fa-brain fa-8x mx-3 icon-cog"></i>
 					</div>
-					<div class="heading mb-3">
+					<div className="heading mb-3">
 						<h4>Login into your account</h4>
 					</div>
 					<form>
-						<div class="form-input">
-							<span><i class="fa fa-envelope"></i></span>
-							<input type="email" placeholder="Email Address" required/>
+						<div className="form-input">
+							<span><i className="fa fa-envelope"></i></span>
+							<input type="email" placeholder="Email Address" required value={email} onChange = {(e)=>setEmail(e.target.value)}/>
 						</div>
-						<div class="form-input">
-							<span><i class="fa fa-lock"></i></span>
-							<input type="password" placeholder="Password" required />
+						<div className="form-input">
+							<span><i className="fa fa-lock"></i></span>
+							<input type="password" placeholder="Password" required value={password} onChange = {(e)=>setPassword(e.target.value)} />
 						</div>
-						<div class="row mb-3">
-							<div class="col-6 d-flex">
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="cb1"/>
-									<label class="custom-control-label text-white" for="cb1">Remember me</label>
+						<div className="row mb-3">
+							<div className="col-6 d-flex">
+								<div className="custom-control custom-checkbox">
+									<input type="checkbox" className="custom-control-input" id="cb1"/>
+									<label className="custom-control-label text-white" for="cb1">Remember me</label>
 								</div>
 							</div>
-							<div class="col-6 text-right">
-								<a href="forget.html" class="forget-link">Forget password</a>
+							<div className="col-6 text-right">
+								<Link to="forget.html" className="forget-link">Forget password</Link>
 							</div>
 						</div>
-						<div class="text-left mb-3">
-							<button type="submit" class="btn">Login</button>
+						<div className="text-left mb-3">
+							<button type="submit" className="btn" onClick={()=>PostData()}>Login</button>
 						</div>
 					
-						<div class="text-white">Don't have an account?
-							<a href="register.html" class="register-link">Register here</a>
+						<div className="text-white">Don't have an account?
+							<Link to="/SignUp" className="register-link">Register here</Link>
 						</div>
 					</form>
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 d-none d-md-block image-container"></div>
+			<div className="col-lg-6 col-md-6 d-none d-md-block image-container"></div>
 		</div>
 	</div>
       

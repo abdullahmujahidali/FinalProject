@@ -4,7 +4,7 @@ import NavBar from "./components/Navbar"
 import Home from "./components/screens/Home"
 import Profile from "./components/screens/Profile"
 import SignIn from "./components/screens/SignIn"
-import SignUp from "./components/screens/SignUp"
+import SignUp from "./components/screens/Signup"
 import MainHome from "./components/screens/PostHome"
 
 

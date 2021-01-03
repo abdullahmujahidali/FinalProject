@@ -17,7 +17,7 @@ router.post("/signup", (req, res) => {
             if (savedUser) {
                 return res.status(422).json({ error: "User Already Exists" })
             }
-            bcrypt.hash(password, 11)//default is 10
+            bcrypt.hash(password, 12)//default is 10
                 .then(hashedpassword => {
                     const user = new User({
                         email,
@@ -26,15 +26,16 @@ router.post("/signup", (req, res) => {
                     })
                     user.save()
                         .then(user => {
-                            res.json({ message: name+' Joined BigBrains' })
+                            console.log(user)
+                            res.json({ message: 'User Joined BigBrains' })
                         })
-                        .catch(error => {
-                            console.log(error)
+                        .catch(err => {
+                            console.log(err)
                         })
                 })
 
-        }).catch(error => {
-            console.log(error)
+        }).catch(err => {
+            console.log(err)
         })
 })
 
@@ -56,14 +57,15 @@ router.post("/signin",(req,res)=>{
             if(doMatch){
                 // res.json({message:"Sucessfully Logged In!"})
                 const token= jwt.sign({_id:savedUser._id},JWT_SECRET)
-                res.json({token})
+                const {_id,name,email}= savedUser
+                res.json({token,user:{_id,name,email}})
             }
             else{
                 return res.status(422).json({error:"Invalid Email or Password"})
             }
         })
-        .catch(error=>{
-            console.log(error)
+        .catch(err=>{
+            console.log(err)
         })
     })
 })

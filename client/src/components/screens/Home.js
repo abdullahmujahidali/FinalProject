@@ -149,7 +149,7 @@ const Home =()=>{
                   <p className="card-text">
                     Big Brains made my life easier now I don't have to post my questions in facebook groups or at other protals where I have to pay to get answer
                   </p>
-                  <a href="#" className="text-secondary text-decoration-none">Profile</a>
+                  <Link to="#" className="text-secondary text-decoration-none">Profile</Link>
                   <p className="text-black-50">Student at Yales</p>
                 </div>
               </div>
@@ -168,7 +168,7 @@ const Home =()=>{
                           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint iure autem recusandae, veniam, illo dolor soluta assumenda
                           minima quia velit officia sit exercitationem nam ipsa, repellendus aut facilis quasi voluptas!
                         </p>
-                        <a href="#" className="text-secondary text-decoration-none">Go somewhere</a>
+                        <Link to="#" className="text-secondary text-decoration-none">Go somewhere</Link>
                         <p className="text-black-50">CEO at Google</p>
                       </div>
                     </div>
@@ -184,7 +184,7 @@ const Home =()=>{
                           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint iure autem recusandae, veniam, illo dolor soluta assumenda
                           minima quia velit officia sit exercitationem nam ipsa, repellendus aut facilis quasi voluptas!
                         </p>
-                        <a href="#" className="text-secondary text-decoration-none">Go somewhere</a>
+                        <Link to="#" className="text-secondary text-decoration-none">Go somewhere</Link>
                         <p className="text-black-50">CEO at Google</p>
                       </div>
                     </div>
@@ -203,7 +203,7 @@ const Home =()=>{
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint iure autem recusandae, veniam, illo dolor soluta assumenda
                     minima quia velit officia sit exercitationem nam ipsa, repellendus aut facilis quasi voluptas!
                   </p>
-                  <a href="#" className="text-secondary text-decoration-none">Go somewhere</a>
+                  <Link to="#" className="text-secondary text-decoration-none">Go somewhere</Link>
                   <p className="text-black-50">CEO at Google</p>
                 </div>
               </div>

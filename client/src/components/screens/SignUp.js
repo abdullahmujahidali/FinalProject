@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import styled from 'styled-components';
-import "../../components/main.js"
+import "../main.js"
 import {Link,useHistory} from "react-router-dom"
 import M from "materialize-css"
 const YourEffect = styled.div`
@@ -10,32 +10,29 @@ center{
 }
 
 `
-function ValidateEmail(mail) 
-{
- if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
-  {
-	M.toast({html: 'Invalid email', classes: '#0d47a1 blue darken-4'});
-  }
 
-    return (true)
-}
 const SignUp =()=>{
 	const history=useHistory()
 	const [name,setName]=useState("")
-	const [password,setPassword]=useState("")
-	const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
+    const [email,setEmail]=useState("")
 
 	const PostData =()=>{
-		if(!ValidateEmail(email)){
-			fetch("/signup",{
+		
+		if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){	
+			 M.toast({html: 'Invalid email', classes: '#0d47a1 blue darken-4'})
+			return
+		}
+		
+		fetch("/signup",{
 				method:"post",
 				headers:{
 					"Content-Type":"application/json"
 				},
 				body:JSON.stringify({
 					name,
-					password,
-					email
+					email,
+					password
 				})
 			}).then(res=>res.json())
 			.then(data=>{
@@ -44,11 +41,11 @@ const SignUp =()=>{
 				}
 				else{
 					M.toast({html: data.message, classes: '#0d47a1 blue darken-4'});
-					history.push('/SignIn')
+					history.push('/signin')
 				}
+			}).catch(err=>{
+				console.log(err)
 			})
-		}
-		
 	}
 
     return (
