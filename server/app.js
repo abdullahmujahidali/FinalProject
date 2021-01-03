@@ -1,10 +1,17 @@
 const express = require("express");
 const app = express();
 const PORT = 5000;
+const cors = require("cors")
 const mongoose = require("mongoose")
 const { MONGOURI } = require("./keys")
-//we are not exporting require that is why I am not creating an object here
 
+//we are not exporting require that is why I am not creating an object here
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
 mongoose.connect(MONGOURI, {
     useUnifiedTopology: true,
     useNewUrlParser: true

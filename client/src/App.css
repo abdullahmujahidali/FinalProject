@@ -1,6 +1,19 @@
-#toast-contnainer{
-    top: 30px !important;
-    right: 20px !important;
-    border-radius: 25%;
-    left: auto !important;
+#toast-contnainer {
+  top: 30px !important;
+  right: 20px !important;
+  border-radius: 25%;
+  left: auto !important;
+}
+.App {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 5em;
+}
+
+.editor {
+  margin-right: 10em;
+}
+
+.co-editor__editable_inline {
+  min-height: 500px;
 }

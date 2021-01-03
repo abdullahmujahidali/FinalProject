@@ -31,6 +31,9 @@ const NavBar=()=>{
               <li className="nav-item">
                 <Link className="nav-link" to="/">CONTACT</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/create">Create Post</Link>
+              </li>
               <button type="button" className="btn btn-warning">
                <Link to="/SignIn"> <i className="fas fa-sign-in-alt  mx-2"></i></Link>
               </button>
