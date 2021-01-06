@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect,useContext } from "react"
+import { UserContext } from "../../App"
 import parse from "html-react-parser"
 const Footer = () => {
     const [data, setData] = useState([])
+    const { state, dispatch } = useContext(UserContext)
     useEffect(() => {
         fetch("/allpost", {
             headers: {
@@ -9,9 +11,65 @@ const Footer = () => {
             }
         }).then(res => res.json())
             .then(result => {
+                // console.log(result)
                 setData(result.posts)
             })
     }, [])
+
+    const likePost = (id) => {
+        fetch("/like", {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(result => {
+                const newData = data.map(item => {
+                    if (item._id === result._id) {
+                        return result
+                    }
+                    else {
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+
+    }
+    const unlikePost = (id) => {
+        fetch("/unlike", {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(result => {
+                // console.log(result)
+                const newData = data.map(item => {
+                    if (item._id === result._id) {
+                        return result
+                    }
+                    else {
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+
     return (
         <>
             <section className="container">
@@ -38,19 +96,25 @@ const Footer = () => {
                                     <div>
                                         <h2>{item.title}</h2>
                                         <p className="my-1">
-                                        <img src={item.photo} alt=""></img>
-                                        {parse(item.body)}
-            </p>
+                                            <img src={item.photo} alt=""></img>
+                                            {parse(item.body)}
+                                        </p>
                                         <p className="post-date">
                                             {item.subject}
-            </p>
-                                        <button type="button" className="btn btn-light">
-                                            <i className="fas fa-thumbs-up"></i>
-                                            <span>4</span>
-                                        </button>
-                                        <button type="button" className="btn btn-light">
-                                            <i className="fas fa-thumbs-down"></i>
-                                        </button>
+                                        </p>
+                                        {item.likes.includes(state._id)
+                                            ?
+                                            <button type="button" className="btn btn-light">
+                                                <i className="fas fa-thumbs-down" onClick={() => { unlikePost(item._id) }}></i>
+                                            </button>
+                                            :
+                                            <button type="button" className="btn btn-light">
+                                                <i className="fas fa-thumbs-up" onClick={() => { likePost(item._id) }}></i>
+                                                <span>{item.likes.length}</span>
+                                            </button>
+                                        }
+
+
                                         <a href="post.html" className="btn btn-primary">
                                             Discussion <span className='comment-count'>3</span>
                                         </a>

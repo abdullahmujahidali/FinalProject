@@ -1,11 +1,12 @@
 import React, { useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link,useHistory } from "react-router-dom"
 import { UserContext } from "../App"
 import './Style.css';
 import "./main.js"
 // import {} from "../components/screens/Home"
 const NavBar = () => {
   const { state, dispatch } = useContext(UserContext)
+  const history=useHistory()
   const renderList = () => {
     if (state) {
       return [
@@ -16,7 +17,11 @@ const NavBar = () => {
           <Link className="nav-link" to="/profile">PROFILE</Link>
         </li>,
         <button type="button" className="btn btn-warning">
-          <Link to="/"> <i className="fas fa-sign-out-alt  mx-2"></i></Link>
+          <Link to="/"onClick={()=>{
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push("/")
+          }}> <i className="fas fa-sign-out-alt  mx-2"></i></Link>
         </button>
       ]
     }
@@ -34,7 +39,7 @@ const NavBar = () => {
           <Link className="nav-link" to="/">CONTACT</Link>
         </li>,
         <button type="button" className="btn btn-warning">
-          <Link to="/SignIn"> <i className="fas fa-sign-in-alt  mx-2"></i></Link>
+          <Link to="/SignIn"> <i className="fas fa-sign-in-alt  mx-2" ></i></Link>
         </button>
       ]
 

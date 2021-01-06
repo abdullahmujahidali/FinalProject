@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import parse from "html-react-parser"
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import M from "materialize-css"
@@ -41,10 +41,10 @@ const CreatePost = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log("Value is",subject)
-                    console.log("title is",title)
-                    console.log("body is",body)
-                    console.log("pic is",url)
+                    // console.log("Value is",subject)
+                    // console.log("title is",title)
+                    // console.log("body is",body)
+                    // console.log("pic is",url)
                     if (data.error) {
                         M.toast({ html: data.error, classes: "#004d40 teal darken-4" })
                     }

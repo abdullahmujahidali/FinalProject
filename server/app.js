@@ -20,7 +20,8 @@ app.use(
 
 mongoose.connect(MONGOURI, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify:false
 })
 mongoose.connection.on("connected", () => {
     console.log("Mongo Database connected")

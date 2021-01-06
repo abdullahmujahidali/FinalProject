@@ -1,14 +1,7 @@
 import React,{useState} from "react"
-import styled from 'styled-components';
-import "../main.js"
 import {Link,useHistory} from "react-router-dom"
 import M from "materialize-css"
-const YourEffect = styled.div`
-center{
-	position:center;
-}
 
-`
 const SignUp =()=>{
 	const history=useHistory()
 	const [name,setName]=useState("")
@@ -45,7 +38,7 @@ const SignUp =()=>{
 	}
 
     return (
-      <YourEffect>
+     
        	<div className="container-fluid">
 		<div className="row">
 			<div className="col-lg-6 col-md-6 form-container">
@@ -95,7 +88,6 @@ const SignUp =()=>{
 	</div>
   
       
-      </YourEffect>
 
     )
 }
