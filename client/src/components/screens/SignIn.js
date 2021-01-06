@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React, { useState,useContext } from "react"
 import styled from 'styled-components';
+import {UserContext} from "../../App"
 import "../main.js"
 import "./Home"
 import { Link, useHistory } from "react-router-dom"
@@ -10,6 +11,7 @@ const YourEffect = styled.div`
 `
 
 const SignIn = () => {
+	const {state,dispatch}=useContext(UserContext)
 	const history = useHistory()
 	const [password, setPassword] = useState("")
 	const [email, setEmail] = useState("")
@@ -19,7 +21,7 @@ const SignIn = () => {
 		// 	M.toast({ html: 'Invalid email', classes: '#0d47a1 blue darken-4' })
 		// 	return
 		// }
-		fetch("http://localhost:5000/signin", {
+		fetch("/signin", {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json"
@@ -34,6 +36,10 @@ const SignIn = () => {
 					M.toast({ html: data.error, classes: '#0d47a1 blue darken-4' });
 				}
 				else {
+					localStorage.setItem("jwt",data.token)
+					localStorage.setItem("user",JSON.stringify(data.user))
+					dispatch({type:"USER",payload:data.user})
+
 					M.toast({ html: "Login Success", classes: '#0d47a1 blue darken-4' });
 					history.push('/PostHome')
 				}

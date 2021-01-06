@@ -6,11 +6,9 @@ import M from "materialize-css"
 const YourEffect = styled.div`
 center{
 	position:center;
-	
 }
 
 `
-
 const SignUp =()=>{
 	const history=useHistory()
 	const [name,setName]=useState("")
@@ -19,9 +17,9 @@ const SignUp =()=>{
 	const PostData =()=>{
 		// if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){	
 		// 	 M.toast({html: 'Invalid email', classes: '#0d47a1 blue darken-4'})
-		// 	return
+		// 	return 
 		// }
-		fetch("http://localhost:5000/signup",{
+		fetch("/signup",{
 				method:"post",
 				headers:{
 					"Content-Type":"application/json"
@@ -38,8 +36,8 @@ const SignUp =()=>{
 					M.toast({html: data.error, classes: '#0d47a1 blue darken-4'});
 				}
 				else{
-					// M.toast({html: data.message, classes: '#0d47a1 blue darken-4'});
-					history.push('/SignIn')
+					M.toast({html: data.message, classes: '#0d47a1 blue darken-4'});
+					history.push('/signin')
 				}
 			}).catch(err=>{
 				console.log(err)
