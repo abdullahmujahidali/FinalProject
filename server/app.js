@@ -1,9 +1,6 @@
 const express = require("express");
 const app = express();
-
-
 const PORT = 5000;
-
 const cors = require("cors")
 
 const mongoose = require("mongoose")
@@ -23,6 +20,7 @@ mongoose.connect(MONGOURI, {
     useNewUrlParser: true,
     useFindAndModify:false
 })
+
 mongoose.connection.on("connected", () => {
     console.log("Mongo Database connected")
 })

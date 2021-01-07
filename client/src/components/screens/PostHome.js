@@ -69,7 +69,11 @@ const Footer = () => {
             })
     }
 
-
+    // const makeComment =(text,postId)=>{
+    //     fetch("/comment",{
+    //         method:"put",
+    //     })
+    // }
     return (
         <>
             <section className="container">

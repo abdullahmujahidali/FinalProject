@@ -5,6 +5,7 @@ import "../main.js"
 import "./Home"
 import { Link, useHistory } from "react-router-dom"
 import M from "materialize-css"
+
 const YourEffect = styled.div`
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 

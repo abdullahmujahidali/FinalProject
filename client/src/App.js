@@ -4,6 +4,8 @@ import NavBar from "./components/Navbar"
 import Home from "./components/screens/Home"
 import Profile from "./components/screens/Profile"
 import SignIn from "./components/screens/SignIn"
+import Post from "./components/screens/Post"
+
 import SignUp from "./components/screens/SignUp"
 import MainHome from "./components/screens/PostHome"
 import CreatePost from "./components/screens/CreatePost"
@@ -42,6 +44,9 @@ const Routing = () => {
       </Route>
       <Route path="/create">
         <CreatePost />
+      </Route>
+      <Route path="/post">
+        <Post />
       </Route>
     </Switch>
   )
