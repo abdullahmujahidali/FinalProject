@@ -6,7 +6,7 @@ const requireLogin =require("../middleware/requireLogin")
 
 router.get("/allpost",requireLogin,(req,res)=>{
     Post.find()
-    .populate("postedBy","_id name")
+    .populate("postedBy","_id name pic")
     .then(posts=>{
         res.json({posts})
     })
@@ -38,9 +38,21 @@ router.post("/createpost",requireLogin,(req,res)=>{
     })
 })
 
+router.get("/getsubpost",requireLogin,(req,res)=>{
+    Post.find({postedBy:{$in:req.user.following}}) 
+    .populate("postedBy","_id name pic")
+    .then(posts=>{
+        res.json({posts})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+
 router.get("/mypost",requireLogin,(req,res)=>{
     Post.find({postedBy:req.user._id})
-    .populate("PostedBy","_id name")
+    .populate("PostedBy","_id name pic")
     .then(mypost=>{
         res.json({mypost})
     })

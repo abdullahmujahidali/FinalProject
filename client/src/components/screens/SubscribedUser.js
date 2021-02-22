@@ -6,7 +6,7 @@ const Footer = () => {
     const [data, setData] = useState([])
     const { state, dispatch } = useContext(UserContext)
     useEffect(() => {
-        fetch("/allpost", {
+        fetch("/getsubpost", {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
@@ -92,23 +92,22 @@ const Footer = () => {
       </h1>
                 <p className="lead"><i className="fas fa-user" ></i> Big Brains!</p>
 
-                <div className="posts"  style={{backgroundColor: "#80d6ff"}}>
+                <div className="posts"  style={{backgroundColor: "#E0F2F1"}}>
                     {
                         data.map(item => {
                             return (
                                 <div className="post bg-white p-1 my-1" key={item._id}  >
                                     <div >
-                                        <Link to="/profile">
+                                        <a href="/profile">
                                             <img
                                                 className="round-img"
-                                                src={item.postedBy.pic}
+                                                src={item.photo}
                                                 alt=""
                                             />
                                             <h4><Link to={item.postedBy._id !== state._id ?`/profile/`+item.postedBy._id : `/profile/` }>{item.postedBy.name}</Link></h4>
-                                        </Link>
-                                  
+                                        </a>
                                     </div>
-                                    <div style={{backgroundColor: "#fff"}} >
+                                    <div style={{backgroundColor: "#78909C"}} >
                                         <h2>{item.title}</h2>
                                         <p className="my-1">
                                             <img src={item.photo} alt=""></img>
