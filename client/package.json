@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "canvas-ui": "^0.2.3",
+    "cors": "^2.8.5",
     "html-react-parser": "^1.1.1",
     "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",

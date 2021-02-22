@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet");
+
 * {
   box-sizing: border-box;
 }
@@ -26,7 +27,7 @@ header a {
   color: whitesmoke;
 }
 nav{
-  background-color: black;
+  background-color: black  !important;
 }
 nav a{
   color: white;
@@ -620,4 +621,6 @@ footer .column i + i {
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
+
+
 

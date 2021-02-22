@@ -1,6 +1,7 @@
 import React, { useState, useEffect,useContext } from "react"
 import { UserContext } from "../../App"
 import parse from "html-react-parser"
+import {Link} from "react-router-dom"
 const Footer = () => {
     const [data, setData] = useState([])
     const { state, dispatch } = useContext(UserContext)
@@ -15,7 +16,21 @@ const Footer = () => {
                 setData(result.posts)
             })
     }, [])
-
+    const delelePost=(postid)=>{
+        fetch(`/deletepost/${postid}`,{
+            method:"delete",
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            console.log(result);
+            const newData = data.filter(item=>{
+                return item._id !== result._id
+            })
+            setData(newData)
+        })
+    }
     const likePost = (id) => {
         fetch("/like", {
             method: "put",
@@ -68,36 +83,31 @@ const Footer = () => {
                 console.log(err)
             })
     }
-
-    // const makeComment =(text,postId)=>{
-    //     fetch("/comment",{
-    //         method:"put",
-    //     })
-    // }
+    
     return (
         <>
-            <section className="container">
+            <section className="container" style={{backgroundColor: "#E0F2F1"}}>
                 <h1 className="large text-primary">
                     Posts
       </h1>
-                <p className="lead"><i className="fas fa-user"></i> Big Brains!</p>
+                <p className="lead"><i className="fas fa-user" ></i> Big Brains!</p>
 
-                <div className="posts">
+                <div className="posts"  style={{backgroundColor: "#E0F2F1"}}>
                     {
                         data.map(item => {
                             return (
-                                <div className="post bg-white p-1 my-1" key={item._id}>
-                                    <div>
-                                        <a href="profile.html">
+                                <div className="post bg-white p-1 my-1" key={item._id}  >
+                                    <div >
+                                        <a href="/profile">
                                             <img
                                                 className="round-img"
                                                 src={item.photo}
                                                 alt=""
                                             />
-                                            <h4>{item.postedBy.name}</h4>
+                                            <h4><Link to={item.postedBy._id !== state._id ?`/profile/`+item.postedBy._id : `/profile/` }>{item.postedBy.name}</Link></h4>
                                         </a>
                                     </div>
-                                    <div>
+                                    <div style={{backgroundColor: "#78909C"}} >
                                         <h2>{item.title}</h2>
                                         <p className="my-1">
                                             <img src={item.photo} alt=""></img>
@@ -119,16 +129,15 @@ const Footer = () => {
                                         }
 
 
-                                        <a href="post.html" className="btn btn-primary">
+                                        <a href="/Post" className="btn btn-primary">
                                             Discussion <span className='comment-count'>3</span>
                                         </a>
-                                        <button
+                                        {item.postedBy._id === state._id && 
+                                            <button onClick={()=>delelePost(item._id)}
                                             type="button"
                                             className="btn btn-danger"
-                                        >
-                                            <i className="fas fa-times"></i>
-                                        </button>
-                                    </div>
+                                        >  <i className="fas fa-times"> </i></button> }
+                                   </div>
                                 </div>
                             )
                         })

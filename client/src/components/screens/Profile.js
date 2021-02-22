@@ -50,11 +50,10 @@ const Profile = () => {
           </p>
             <div className="line"></div>
             <h2 className="text-primary">Skill Set</h2>
-          </div>
-
-          <div className="profile-exp bg-white p-2">
+         
+          <div className="profile-exp bg-dark p-2" >
             <h2 className="text-primary" >POSTS</h2>
-            <div>
+            <div  style={{backgroundColor: "#E0F2F1" }}>
               {
                 mypics.map(item => {
                   return (
@@ -75,6 +74,7 @@ const Profile = () => {
 
           </div>
 
+          </div>
 
 
 

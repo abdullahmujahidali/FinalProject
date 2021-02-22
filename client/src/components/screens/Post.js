@@ -1,14 +1,47 @@
-import React from "react"
+import React, { useState, useEffect,useContext } from "react"
+import { UserContext } from "../../App"
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import parse from "html-react-parser"
 
 const Post = ()=>{
+  const [body, setBody] = useState("")
+  const [data, setData] = useState([])
+  const { state, dispatch } = useContext(UserContext)
+  useEffect(() => {
+    
+    fetch("/:id", {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+        }
+    }).then(res => res.json())
+        .then(result => {
+            console.log(result)
+            setData(result.posts)
+        })
+}, [])
+
+  const makeComment = (text,postId)=>{
+    fetch("/comment",{
+        method:"put",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+localStorage.getItem("jwt")
+        },
+        body:JSON.stringify({
+            postId,
+            text
+        })
+    })
+}
     return (
         <>
-      <a href="posts.html" class="btn">Back To Posts</a>
-      <div class="post bg-white p-1 my-1">
+      <a href="/PostHome" className="btn">Back To Posts</a>
+      <div className="post bg-white p-1 my-1">
         <div>
           <a href="profile.html">
             <img
-              class="round-img"
+              className="round-img"
               src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
               alt=""
             />
@@ -16,7 +49,7 @@ const Post = ()=>{
           </a>
         </div>
         <div>
-          <p class="my-1">
+          <p className="my-1">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
             possimus corporis sunt necessitatibus! Minus nesciunt soluta
             suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
@@ -25,28 +58,42 @@ const Post = ()=>{
         </div>
       </div>
 
-      <div class="post-form">
-        <div class="bg-primary p">
+      <div className="post-form">
+        <div className="bg-primary p">
           <h3>Leave A Comment</h3>
         </div>
-        <form class="form my-1">
-          <textarea
-            name="text"
-            cols="30"
-            rows="5"
-            placeholder="Comment on this post"
-            required
-          ></textarea>
-          <input type="submit" class="btn btn-dark my-1" value="Submit" />
+        <form className="form my-1" onSubmit={(e)=>{
+          e.preventDefault()
+          makeComment(e.target[0].value)
+        }}>
+        <div className="App">
+                    <div className="editor">
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data={body}
+                            onChange={(event, editor) => {
+                                // setBody(event.target.body)
+
+                                const data = editor.getData()
+                                setBody(data)
+                                console.log(data)
+                            }
+                            }
+                        />
+                    </div>
+                    <h2>Content</h2>
+                    <p>{parse(body)}</p>
+                </div>
+          <input type="submit" className="btn btn-dark my-1" value="Submit" />
         </form>
       </div>
 
-      <div class="comments">
-        <div class="post bg-white p-1 my-1">
+      <div className="comments">
+        <div className="post bg-white p-1 my-1">
           <div>
             <a href="profile.html">
               <img
-                class="round-img"
+                className="round-img"
                 src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
                 alt=""
               />
@@ -54,23 +101,23 @@ const Post = ()=>{
             </a>
           </div>
           <div>
-            <p class="my-1">
+            <p className="my-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
               possimus corporis sunt necessitatibus! Minus nesciunt soluta
               suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
               dolor? Illo perferendis eveniet cum cupiditate aliquam?
             </p>
-             <p class="post-date">
+             <p className="post-date">
                 Posted on 04/16/2019
             </p>
           </div>
         </div>
 
-        <div class="post bg-white p-1 my-1">
+        <div className="post bg-white p-1 my-1">
           <div>
             <a href="profile.html">
               <img
-                class="round-img"
+                className="round-img"
                 src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
                 alt=""
               />
@@ -78,20 +125,20 @@ const Post = ()=>{
             </a>
           </div>
           <div>
-            <p class="my-1">
+            <p className="my-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
               possimus corporis sunt necessitatibus! Minus nesciunt soluta
               suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
               dolor? Illo perferendis eveniet cum cupiditate aliquam?
             </p>
-             <p class="post-date">
+             <p className="post-date">
                 Posted on 04/16/2019
             </p>
              <button      
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger"
           >
-            <i class="fas fa-times"></i>
+            <i className="fas fa-times"></i>
           </button>
           </div>
         </div>

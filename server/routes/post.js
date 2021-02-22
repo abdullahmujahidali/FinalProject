@@ -49,6 +49,22 @@ router.get("/mypost",requireLogin,(req,res)=>{
     })
 })
 
+router.get("/post/:id", requireLogin, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ msg: "Post not found" });
+        }
+        res.json(post);
+    }
+    catch (err) {
+        console.error(err.message);
+        if (err.kind === "ObjectId") {
+            return res.status(404).json({ msg: "Post not found" });
+        }
+        res.status(500).send("Server Error");
+    }
+});
 router.put("/like",requireLogin,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         $push:{likes:req.user._id}
@@ -101,6 +117,22 @@ router.put("/comment",requireLogin,(req,res)=>{
         }
     })
 })
-
+router.delete("/deletepost/:postId",requireLogin,(req,res)=>{
+    Post.findOne({_id:req.params.postId})
+    .populate("postedBy","_id")
+    .exec((err,post)=>{
+        if(err || !post){
+            res.status(422).json({error:err})
+        }
+        if(post.postedBy._id.toString()=== req.user._id.toString()){
+            post.remove()
+            .then(result=>{
+                res.json({message:"Sucessfully Deleted"});
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
+    })
+})
 
 module.exports = router

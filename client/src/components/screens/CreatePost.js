@@ -8,11 +8,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import M from "materialize-css"
 
-
 const CreatePost = () => {
-
     const history = useHistory()
-
     const [title, setTitle] = useState("")
     const [subject, setSub] = useState("Computer Science")
     const [value, setValue] = useState('');
@@ -32,8 +29,8 @@ const CreatePost = () => {
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({
-                    
-                    subject:value,
+
+                    subject: value,
                     title,
                     body,
                     photo: url
@@ -56,10 +53,9 @@ const CreatePost = () => {
                     console.log(err)
                 })
         }
-    }, [url, body, title, subject, history,value])
+    }, [url, body, title, subject, history, value])
 
     const postDetails = () => {
-
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "bigbrain")
@@ -75,9 +71,7 @@ const CreatePost = () => {
             .catch(err => {
                 console.log(err)
             })
-
     }
-
     return (
         <>
 
