@@ -1,0 +1,63 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000",
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^26.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.8.3",
+    "aos": "^2.3.4",
+    "ckeditor": "^4.12.1",
+    "font-awesome": "^4.7.0",
+    "html-react-parser": "^1.2.4",
+    "materialize-css": "^1.0.0-rc.2",
+    "react": "^17.0.1",
+    "react-alert": "^7.0.2",
+    "react-dom": "^17.0.1",
+    "react-materialize": "^3.9.7",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-select": "^4.2.1",
+    "react-toast-notifications": "^2.4.3",
+    "react-toastify": "^7.0.3",
+    "styled-components": "^5.2.1",
+    "tailwind-toast": "^1.0.5",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
+  }
+}

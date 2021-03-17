@@ -1,0 +1,158 @@
+import React, { useEffect, useState, useContext } from "react"
+import { UserContext } from "../../App"
+import { useParams, Link } from "react-router-dom"
+import parse from "html-react-parser"
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+export default function Post() {
+    const [userPost, setUserPost] = useState(null)
+    const { state, dispatch } = useContext(UserContext)
+    const [data, setData] = useState([])
+    const [body, setBody] = useState("")
+    const { postid } = useParams()
+
+    useEffect(() => {
+        fetch(`/post/${postid}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res => res.json())
+            .then(result => {
+                console.log(result)
+
+                setUserPost(result.posts)
+            })
+    }, [])
+    const makeComment = (text, postId) => {
+        fetch("/comment", {
+            method: "put",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId,
+                text
+            })
+        }).then(res => res.json())
+            .then(result => {
+                console.log(result)
+                const newData = data.map(item => {
+                    if (item._id === result._id) {
+                        return result
+                    }
+                    else {
+                        return item
+                    }
+
+                })
+                setData(newData)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    const deleteComment = (postid, commentid) => {
+        fetch(`/deletecomment/${postid}/${commentid}`, {
+            method: "delete",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                const newData = data.map((item) => {
+                    if (item._id === result._id) {
+                        return result;
+                    } else {
+                        return item;
+                    }
+                });
+                setData(newData);
+                window.location.reload()
+            });
+    };
+
+    return (
+        <>
+            <section className="text-gray-600 body-font" key={userPost ? userPost._id : "loading"}>
+                <div className="container px-12 py-20 mx-auto flex flex-col">
+                    <div className="">
+                        <div className="rounded-lg h-64  px-12 overflow-hidden">
+                            <img alt="content" className="" src={userPost ? userPost.photo : "loading"} />
+                        </div>
+                        <div className="flex flex-col sm:flex-row mt-10">
+                            <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
+                                <div className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
+                                   
+                                    <img className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"  viewBox="0 0 24 24" src={userPost ? userPost.postedBy.pic : "loading"} alt="load"/>                
+                                        
+                                        
+   
+                                 
+                                </div>
+                                <div className="flex flex-col items-center text-center justify-center">
+                                    <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{userPost ? userPost.title : "loading"}</h2>
+                                    <div className="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
+                                    <p className="text-base"><Link to={ userPost ? (userPost.postedBy._id !== state._id ? "/profile/" + userPost.postedBy._id : "/profile") : "loading"}> Posted By: {userPost ? userPost.postedBy.name : "loading"}</Link></p>
+                                </div>
+                            </div>
+                            <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
+                                <p className="leading-relaxed text-lg mb-4">{parse(userPost ? userPost.body : "loading")}</p>
+                                <h1 className="font-medium title-font mt-4 text-gray-900 text-lg">DISCUSSION</h1>
+                                {
+                                    userPost ?
+                                        userPost.comments.map(record => {
+                                            return (
+                                                <h6 key={record._id}>
+                                                    <span style={{ fontWeight: "500" }}>
+                                                        {record.postedBy.name} :
+                                                    </span>  {record.text}
+                                                    {(record.postedBy._id) === state._id && (
+                                                        <i class="fas fa-trash" onClick={() => deleteComment(userPost._id,record._id)}></i>
+                                                    )}
+                                                </h6>
+                                            )
+                                        })
+                                        :
+                                        "loading"
+                                }
+
+
+                                <div class="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
+                                    <form class="w-full max-w-xl bg-white rounded-lg px-4 pt-2" onSubmit={(e) => {
+                                        e.preventDefault()
+                                        makeComment(e.target[0].value, userPost._id)
+
+                                    }}>
+                                        <div class="flex flex-wrap -mx-3 mb-6">
+                                            <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>
+                                            <div class="w-full md:w-full px-3 mb-2 mt-2">
+                                                <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='Type Your Comment' required></textarea>
+                                            </div>
+                                            <div class="w-full md:w-full flex items-start md:w-full px-3">
+                                                <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
+                                                    <svg fill="none" class="w-5 h-5 text-gray-600 mr-1" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <p class="text-xs md:text-sm pt-px">Some HTML is okay.</p>
+                                                </div>
+                                                <div class="-mr-1">
+                                                    <input type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100" value='Post Comment' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </>
+    )
+}
