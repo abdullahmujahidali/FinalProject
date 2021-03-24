@@ -38,18 +38,18 @@ export default function Landing() {
           <div className="container relative mx-auto" data-aos="fade-in">
             <div className="items-center flex flex-wrap">
               <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-                <div className="pr-12">
+                <div className="pr-10">
                   <h1 className="text-white font-semibold text-4xl">
-                    Tired of searching over the <span class="text-red-500">internet? </span>
+                    Tired of searching over the <span className="text-red-500">internet? </span>
                   </h1>
                   <p className="mt-4 text-lg text-gray-300">
-                    This is a simple example of a Landing Page you can build
-                    using Tailwind Starter Kit. It features multiple CSS
-                    components based on the Tailwindcss design system.
+                  Join <strong>BigBrains</strong> and help us grow the largest learning platform where you can share your insight regarding something or help others with their problems.
+                  Covering maximum number of audience by offering a network of different subjects which will help all the student body now you don’t have to visit any other platform 
+                  pay nothing for everything we offer.
                     </p>
-                  <a href="/signup" class="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white py-2 border border-orange-500 hover:border-transparent  px-12 rounded inline-block mt-5">Sign Up    !</a>
+                  <Link to="/signup" className="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white py-2 border border-orange-500 hover:border-transparent  px-12 rounded inline-block mt-5">Sign Up    !</Link>
               &nbsp;&nbsp;
-              <a href="/signin" class="bg-transparent hover:bg-blue-500 text-blue-400 font-semibold hover:text-white py-2 border border-blue-500 hover:border-transparent  px-12 rounded inline-block mt-5">Sign In    !</a>
+              <Link to="/signin" className="bg-transparent hover:bg-blue-500 text-blue-400 font-semibold hover:text-white py-2 border border-blue-500 hover:border-transparent  px-12 rounded inline-block mt-5">Sign In    !</Link>
                 </div>
               </div>
 

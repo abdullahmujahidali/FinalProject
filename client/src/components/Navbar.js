@@ -1,16 +1,52 @@
-import React,{useContext} from "react";
+import React,{useContext,useRef,useEffect,useState} from "react";
 import {Link,useHistory} from "react-router-dom"
 import logo from "./assets/logosmwhite.png"
 import {UserContext} from "../App"
 
 
 export default function Navbar(props) {
+  const [email, setEmail] = useState("")
+  const [userDetails, setUserDetails]= useState([])
+  const searchModal  = useRef(null)
+  const [showModal, setShowModal] = React.useState(false);
   const {state,dispatch}=useContext(UserContext)
   const history=useHistory()
+  useEffect(()=>{
+
+  },[])
   const renderList=()=>{
     if(state){
       return[
-        <li className="flex items-center">
+        <li key="1" className="flex items-center">
+         <button
+        className=""
+        type="button"
+        onClick={() => setShowModal(true)}
+      >
+
+      <li
+        className={
+          (props.transparent
+            ? "lg:text-white lg:hover:text-blue-500 text-blue-500"
+            : "text-black hover:text-blue-500") +
+          " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+        }
+        href=""
+      >
+        <i 
+          className={
+            (props.transparent
+              ? "lg:text-blue-500 text-blue-500"
+              : "text-blue-500") +
+            " fas fa-search text-lg leading-lg "
+          }
+        />
+        <span className="lg:hidden text-white inline-block ml-2">Search</span>
+      </li>
+      </button>
+
+    </li>,
+        <li key="2" className="flex items-center">
       <Link
         className={
           (props.transparent
@@ -24,7 +60,7 @@ export default function Navbar(props) {
        
       </Link>
     </li>,
-    <li className="flex items-center">
+    <li key="3" className="flex items-center">
     <Link
       className={
         (props.transparent
@@ -38,7 +74,7 @@ export default function Navbar(props) {
     </Link>
   </li>,
 
-    <li className="flex items-center">
+    <li key="4" className="flex items-center">
       <Link
         className={
           (props.transparent
@@ -53,7 +89,7 @@ export default function Navbar(props) {
       </Link>
     </li>,
 
-    <li className="flex items-center">
+    <li key="5" className="flex items-center">
       <Link
         className={
           (props.transparent
@@ -67,7 +103,7 @@ export default function Navbar(props) {
       </Link>
     </li>,
 
-    <li className="flex items-center">
+    <li key="6" className="flex items-center">
       <button
         className={
           (props.transparent
@@ -92,7 +128,7 @@ export default function Navbar(props) {
     }
     else{
       return [
-      <li className="flex items-center">
+      <li key="1" className="flex items-center">
       <a
         className={
           (props.transparent
@@ -114,7 +150,7 @@ export default function Navbar(props) {
       </a>
     </li>,
 
-    <li className="flex items-center">
+    <li key="2" className="flex items-center">
       <a
         className={
           (props.transparent
@@ -136,7 +172,7 @@ export default function Navbar(props) {
       </a>
     </li>,
 
-    <li className="flex items-center">
+    <li key="3" className="flex items-center">
       <a
         className={
           (props.transparent
@@ -158,7 +194,7 @@ export default function Navbar(props) {
       </a>
     </li>,
 
-    <li className="flex items-center">
+    <li key="4" className="flex items-center">
       <button
         className={
           (props.transparent
@@ -176,6 +212,22 @@ export default function Navbar(props) {
     }
   }
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const fetchUsers=(query)=>{
+    setEmail(query)
+    fetch("/search-users",{
+      method:"post",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        query
+      })
+    }).then(res=>res.json())
+    .then(results=>{
+      setUserDetails(results.user)
+    })
+  }
+
   return (
     <>
       <nav
@@ -226,6 +278,75 @@ export default function Navbar(props) {
           </div>
         </div>
       </nav>
+    
+      {showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
+            ref={searchModal}
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-2xl font-semibold">
+                    Search a User!
+                  </h3>
+                  
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                  
+                </div>
+
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t ">
+                  <h2>Enter email to search a user! </h2> </div>
+                  
+                {/*body*/}
+                <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => fetchUsers(e.target.value)}
+                          className="px-8 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
+                          placeholder="Search User"
+                          style={{ transition: "all .15s ease" }}
+                        />
+                <div className="relative p-6 flex-auto ">
+                <ul className="collection "style={{width: "100%"}}>
+                {userDetails.map(item=>{
+                  return <Link to= {item._id !== state._id  ? "/profile/"+item._id: "/profile"} onClick={()=>{
+                    setEmail('')
+                    setShowModal(false)
+                  }}> <li className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">{item.name}</li></Link>
+                })}
+
+                  </ul>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
     </>
   );
+
+  
 }
+

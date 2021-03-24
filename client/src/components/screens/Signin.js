@@ -5,10 +5,11 @@ import {UserContext} from "../../App"
 import logoP from "../assets/logoBlack.png"
 import M from "materialize-css"
 import FooterSmall from "../FooterSmall.js";
+
 import "../../App.css"
 
 export default function SignIn() {
-  const {state,dispatch}=useContext(UserContext)
+  const {dispatch}=useContext(UserContext)
   const history = useHistory()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -122,7 +123,7 @@ export default function SignIn() {
                       <div>
                         <label className="inline-flex items-center cursor-pointer">
                           <span className="ml-2 text-sm font-semibold text-gray-700">
-                            Forgot Password?
+                            <a href="/reset">  Forgot Password?</a>
                           </span>
                         </label>
                       </div>
@@ -140,26 +141,7 @@ export default function SignIn() {
                     </form>
                   </div>
                 </div>
-                <div className="flex flex-wrap mt-6">
-                  <div className="w-1/2">
-                    <a
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      className="text-gray-300"
-                    >
-                      <small>Forgot password?</small>
-                    </a>
-                  </div>
-                  <div className="w-1/2 text-right">
-                    <a
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      className="text-gray-300"
-                    >
-                      <small>Create new account</small>
-                    </a>
-                  </div>
-                </div>
+             
               </div>
             </div>
           </div>

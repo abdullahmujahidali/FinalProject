@@ -3,12 +3,17 @@ const router = express.Router()
 const mongoose = require("mongoose")
 const Post = mongoose.model("Post")
 const User = mongoose.model("User")
+var dateFormat = require("dateformat");
+var now = new Date();
+
+
 
 const requireLogin =require("../middleware/requireLogin")
 
 router.get("/allpost",requireLogin,(req,res)=>{
     Post.find()
     .populate("postedBy","_id name pic role organization")
+    .sort("-createdAt")
     .then(posts=>{
         res.json({posts})
     })
@@ -18,21 +23,21 @@ router.get("/allpost",requireLogin,(req,res)=>{
 })
 
 router.post("/createpost",requireLogin,(req,res)=>{
-    // console.log(req.body.subject)
     const {subject,title,body,photo}=req.body
-    // console.log(subject,title,body,photo)
     if(!title || !subject || !body){
         return res.status(422).json({error:"Please add all fields"})
     }
-
+    dat=dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     const post = new Post({
          subject,
          title,
+         postDate:dat,
          body,
          photo,
          postedBy:req.user 
      })
     post.save().then(result=>{
+        console.log(post)
         res.json({post:result})
     })
     .catch(err=>{
@@ -43,6 +48,7 @@ router.post("/createpost",requireLogin,(req,res)=>{
 router.get("/getsubpost",requireLogin,(req,res)=>{
     Post.find({postedBy:{$in:req.user.following}}) 
     .populate("postedBy","_id name pic")
+    .sort("-createdAt")
     .then(posts=>{
         res.json({posts})
     })
@@ -111,7 +117,6 @@ router.put("/like",requireLogin,(req,res)=>{
         }
     })
 })
-
 
 router.put("/unlike",requireLogin,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
@@ -198,5 +203,27 @@ router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
         }
       });
   });
+
+
+
+//   router.put("/like/:id/:comment_id",requireLogin,(req,res)=>{
+//     const comment = { _id: req.params.comment_id };
+
+//     Post.findByIdAndUpdate(req.body.postId,{
+//         $push:{commentsLike:req.user._id
+            
+//         }
+        
+//     },{
+//         new:true
+//     }).exec((err,result)=>{
+//         if(err){
+//             return res.status(422).json({error:err})
+//         }
+//         else{
+//             res.json(result)
+//         }
+//     })
+// })
 
 module.exports = router

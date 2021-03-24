@@ -14,6 +14,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    photo: {
+        type: String,
+        default: "https://res.cloudinary.com/bigbrain/image/upload/v1616577494/dummb_eiu9td.png"
+    },
     likes: [{
         type: ObjectId,
         ref: "User"
@@ -23,16 +27,20 @@ const postSchema = new mongoose.Schema({
         postedBy: { 
             type: ObjectId, 
             ref: "User" 
+        },
+        commentDate:{
+            type:Date,
+            default:Date.now
         }
     }],
-    photo: {
-        type: String,
-        default: "https://ibb.co/KwRC4qn"
-    },
+    
     postedBy: {
         type: ObjectId,
         ref: "User"
+    },
+    postDate:{
+        type:String
     }
-})
+},{timestamps:true})
 
 mongoose.model("Post", postSchema)

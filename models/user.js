@@ -14,6 +14,12 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:true
     },
+    resetToken:{
+        type:String
+    },
+    expireToken:{
+        type:Date
+    },
     country:{
         type:String,
         required:true
@@ -32,11 +38,11 @@ const userSchema= new mongoose.Schema({
     },
     pic:{
         type:String,
-        default:"https://res.cloudinary.com/bigbrain/image/upload/v1614013996/defaultuser_yvxo97.png"
+        default:"https://res.cloudinary.com/bigbrain/image/upload/v1616577562/avatardefault_92824_efnc86.png"
     },
     timeline:{
-        type:String,
-        default:"https://res.cloudinary.com/bigbrain/image/upload/v1614013996/defaultuser_yvxo97.png"
+        type:String
+        // default:"https://res.cloudinary.com/bigbrain/image/upload/v1614013996/defaultuser_yvxo97.png"
     },
     follower:[{
         type:ObjectId,

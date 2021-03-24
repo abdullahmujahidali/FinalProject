@@ -2,7 +2,6 @@ import React, { useEffect, useState,useContext } from "react";
 import Footer from "../Footer.js";
 import parse from "html-react-parser"
 import {UserContext} from "../../App"
-import pofilePic from "../assets/abdullah.jfif"
 import {useParams,Link} from "react-router-dom"
 export default function Profile() {
   const [userProfile, setProfile] = useState(null)
@@ -20,7 +19,7 @@ export default function Profile() {
 
             setProfile(result)
         })
-  }, [])
+  })
   const followUser = () => {
     fetch("/follow", {
         method: "put",
@@ -123,7 +122,7 @@ const unfollowUser = () => {
                     <div className="relative">
                       <img
                         alt="..."
-                        src={pofilePic}
+                        src={userProfile?userProfile.user.pic: "loading"}
                         className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
                         style={{ maxWidth: "150px" }}
                       />
@@ -150,10 +149,6 @@ const unfollowUser = () => {
                         Dis connect
                       </button>
                             }
-                     
-                      
-
-                    
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4 lg:order-1">
@@ -179,15 +174,15 @@ const unfollowUser = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-center mt-12">
-                  <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">
+                <div className="text-center mt-8">
+                  <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
                     {userProfile?userProfile.user.name: "loading"}
                   </h3>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
                      {userProfile?userProfile.user.country: "loading"}
                   </div>
-                  <div className="mb-2 text-gray-700 mt-10">
+                  <div className="mb-2 text-gray-700 mt-4">
                   <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
                   {userProfile? userProfile.user.organization:"loading"}
                      
@@ -206,9 +201,10 @@ const unfollowUser = () => {
                       </p>
                     </div>
                 </div>
-
+                      
                     <section class="text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
-                      <div class="container px-5 py-24 mx-auto">
+                    <h1 className=" mr-2 text-2xl py-2 text-black"><strong>POSTS</strong></h1>
+                      <div class="container px-5 py-14 mx-auto">
                       {
                           userProfile ?
                           userProfile.posts.map(item=>{
@@ -217,26 +213,21 @@ const unfollowUser = () => {
                               <>
                             
                         <div class="-my-8 divide-y-2 divide-gray-100">
-                          <div class="py-0 flex flex-wrap md:flex-nowrap shadow-2xl ">
-
-                          
-                                
+                          <div class="py-2 flex flex-wrap md:flex-nowrap shadow-2xl px-4 ">
                                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col" key={item._id}>
                               <span class="font-semibold title-font text-gray-700">{item.subject}</span>
-                              <span class="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
+                              <span class="mt-1 text-gray-500 text-sm">{item.postDate}</span>
                             </div>
                             <div class="md:flex-grow">
                               <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{item.title}</h2>
                               <p class="leading-relaxed">{parse(item.body)}</p>
-                              <a class="text-indigo-500 inline-flex items-center mt-4"><Link to={"/post/" + item._id}>Read More </Link>
+                              <Link className="text-indigo-500 inline-flex items-center mt-4" to={"/post/" + item._id}>Read More 
                                 <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                   <path d="M5 12h14"></path>
                                   <path d="M12 5l7 7-7 7"></path>
                                 </svg>
-                              </a>
+                              </Link>
                             </div>
-                           
-                           
                           </div>
                           
 

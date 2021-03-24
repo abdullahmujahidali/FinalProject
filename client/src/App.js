@@ -11,9 +11,8 @@ import UserProfile from "./components/screens/UserProfile"
 import PostHome from "./components/screens/PostHome"
 import Post from "./components/screens/Post"
 import Subscribed from "./components/screens/SubscribedPost"
-
-
-
+import Reset from "./components/screens/Reset"
+import NewPassword from "./components/screens/NewPassword"
 
 import CreatePost from "./components/screens/CreatePost"
 import { reducer, initialState } from "./reducers/userReducer"
@@ -21,16 +20,19 @@ import { reducer, initialState } from "./reducers/userReducer"
 export const UserContext = createContext()
 const Routing = () => {
   const history = useHistory()
-  const { state, dispatch } = useContext(UserContext)
+  const {dispatch } = useContext(UserContext)
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"))
     if (user) {
       dispatch({ type: "USER", payload: user })
-      // history.push("/PostHome")
+      history.push("/home")
 
     }
     else {
-      // history.push("/")
+      if(!history.location.pathname.startsWith('/reset')){
+        // history.push("/")
+      }
+     
     }
   }, [history, dispatch])
   return (
@@ -67,9 +69,16 @@ const Routing = () => {
       </Route>
 
       <Route path="/create">
-        <CreatePost />
+        <CreatePost /> 
       </Route>
 
+      <Route exact path="/reset">
+        <Reset />
+      </Route>
+
+      <Route path="/reset/:token">
+        <NewPassword />
+      </Route>
 
     </Switch>
   )

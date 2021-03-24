@@ -3,7 +3,6 @@ import Footer from "../Footer.js";
 import parse from "html-react-parser"
 import { UserContext } from "../../App"
 import { Link } from "react-router-dom"
-import pofilePic from "../assets/abdullah.jfif"
 
 export default function Profile() {
   const [mypics, setPics] = useState([])
@@ -190,27 +189,30 @@ export default function Profile() {
                       </div>
                     </div>
 
-                    <section class="text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
-                      <div class="container px-5 py-24 mx-auto">
-                        <div class="-my-8 divide-y-2 divide-gray-100">
-                          <div class="py-0 flex flex-wrap md:flex-nowrap shadow-2xl ">
+                    <section className="text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
+                      <div className="container px-5 py-24 mx-auto">
+                        <div className="-my-8 divide-y-2 divide-gray-100">
+                          <div className="py-0 flex flex-wrap md:flex-nowrap shadow-2xl ">
                             {
                               mypics.map(item => {
                                 return (
                                   <>
-                                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col" key={item._id}>
-                                      <span class="font-semibold title-font text-gray-700">{item.subject}</span>
-                                      <span class="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
+                                    <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col" key={item._id}>
+                                      <span className="font-semibold title-font text-gray-700">{item.subject}</span>
+                                      <span className="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
                                     </div>
-                                    <div class="md:flex-grow">
-                                      <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{item.title}</h2>
-                                      <p class="leading-relaxed">{parse(item.body)}</p>
-                                      <a class="text-indigo-500 inline-flex items-center mt-4"><Link to={"/post/" + item._id}>Read More </Link>
-                                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <div className="md:flex-grow">
+                                      <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{item.title}</h2>
+                                      <p className="leading-relaxed">{parse(item.body)}</p>
+                                      < Link className="text-indigo-500 inline-flex items-center mt-4" to={"/post/" + item._id}>Read More 
+                                      <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                           <path d="M5 12h14"></path>
                                           <path d="M12 5l7 7-7 7"></path>
                                         </svg>
-                                      </a>
+                                      
+                                      
+                                      </Link>
+                                       
                                     </div>
                                   </>
                                 )

@@ -1,56 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"
 import FooterSmall from "../FooterSmall.js";
-import pofilePic from "../assets/abdullah.jfif"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from "html-react-parser"
 import M from "materialize-css"
 
-export default function Profile() {
+export default function CreatePost() {
     const history = useHistory()
     const [title, setTitle] = useState("")
-    const [subject, setSub] = useState("Computer Science")
     const [value, setValue] = useState('');
     const [image, setImage] = useState("")
-    const [url, setUrl] = useState("")
+    const [url, setUrl] = useState(undefined)
     const [body, setBody] = useState("")
-
     useEffect(() => {
         if (url) {
-            fetch("/createpost", {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
-                },
-                body: JSON.stringify({
-                    subject: value,
-                    title,
-                    body,
-                    photo: url
-                })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log("Value is", subject)
-                    console.log("title is", title)
-                    console.log("body is", body)
-                    console.log("pic is", url)
-                    if (data.error) {
-                        M.toast({ html: data.error, classes: "#004d40 teal darken-4" })
-                    }
-                    else {
-                        M.toast({ html: "Post created", classes: "#03a9f4 light-blue" })
-                        history.push("/home")
-                    }
-                }).catch(err => {
-                    console.log(err)
-                })
-
+            uploadFields()
         }
-    }, [url, body, title, subject, history, value])
-    const postDetails = () => {
+    })
+    const uploadPic = () => {
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "bigbrain")
@@ -68,10 +35,44 @@ export default function Profile() {
                 console.log(err)
             })
     }
+    const uploadFields = () => {
+        fetch("/createpost", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                subject: value,
+                title,
+                body,
+                photo: url,
+
+            })
+        }).then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    M.toast({ html: data.error, classes: "#004d40 teal darken-4" })
+                }
+                else {
+                    M.toast({ html: "Post created", classes: "#03a9f4 light-blue" })
+                    history.push("/home")
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    const PostData = () => {
+        if (image) {
+            uploadPic()
+        }
+        else {
+            uploadFields()
+        }
+    }
     return (
         <>
             <div className="heading text-center font-bold text-2xl m-5 text-gray-800">New Post</div>
-
             <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                 <div className="relative inline-flex">
                     <svg className="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fillRule="nonzero" /></svg>
@@ -89,16 +90,16 @@ export default function Profile() {
                         <option value="World History">World History</option>
                         <option value="General">General</option>
                         <option value="Engineering">Engineering</option>
-
+                        <option value="Applied Arts">Applied Arts</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Foreign Language">Foreign Language</option>
+                        <option value="Business">Business & Administration</option>
+                        <option value="Social Sciences">Social Sciences</option>
                     </select>
-
                 </div>
                 <br />
                 <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
                     spellCheck="false" placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-
-
-
                 <div className="App">
                     <div className="editor">
                         <CKEditor
@@ -124,13 +125,11 @@ export default function Profile() {
                         <input type='file' className="hidden" onChange={(e) => setImage(e.target.files[0])} />
                     </label>
                 </div>
-
                 <div className="buttons flex">
                     <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">Cancel</div>
-                    <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={() => postDetails()}>Post</div>
+                    <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={() => PostData()}>Post</div>
                 </div>
             </div>
-
             <FooterSmall absolute />
         </>
     )
