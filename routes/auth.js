@@ -9,7 +9,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport")
 const { JWT_SECRET } = require("../config/keys")
 const requireLogin = require("../middleware/requireLogin")
 const crypto = require("crypto")
-const {SENDGRID_API,EMAIL} = require("../config/dev")
+const {SENDGRID_API,EMAIL} = require("../config/keys")
 
 let htmlTemplate = `
 
