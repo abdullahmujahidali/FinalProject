@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        default: "https://res.cloudinary.com/bigbrain/image/upload/v1616577494/dummb_eiu9td.png"
+        default: "https://res.cloudinary.com/bigbrain/image/upload/v1616608676/noQ_hvukdh.png"
     },
     likes: [{
         type: ObjectId,

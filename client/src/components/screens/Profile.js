@@ -130,7 +130,7 @@ export default function Profile() {
                           className="bg-red-500 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1"
                           type="button"
                           style={{ transition: "all .15s ease" }}
-                          onClick={()=>{updatePhoto()}}
+                          onClick={() => { updatePhoto() }}
                         >
                           Update Profile Picture
                       </button>
@@ -189,41 +189,41 @@ export default function Profile() {
                       </div>
                     </div>
 
-                    <section className="text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
-                      <div className="container px-5 py-24 mx-auto">
-                        <div className="-my-8 divide-y-2 divide-gray-100">
-                          <div className="py-0 flex flex-wrap md:flex-nowrap shadow-2xl ">
-                            {
-                              mypics.map(item => {
-                                return (
-                                  <>
-                                    <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col" key={item._id}>
-                                      <span className="font-semibold title-font text-gray-700">{item.subject}</span>
-                                      <span className="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
+                    <section class="text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
+                      <h1 className=" mr-2 text-2xl py-2 text-black"><strong>POSTS</strong></h1>
+                      <div class="container px-5 py-14 mx-auto">
+                        {
+                          mypics ?
+                            mypics.map(item => {
+                              return (
+                                <>
+
+                                  <div className="-my-8 divide-y-2  ">
+                                    <div class="py-2 flex flex-wrap md:flex-nowrap shadow-2xl px-4 text-gray-600 body-font overflow-hidden mt-10 py-10 border-t border-gray-300 text-center">
+                                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col" key={item._id}>
+                                    <span class="font-semibold title-font text-gray-700">{item.subject}</span>
+                              <span class="mt-1 text-gray-500 text-sm ">{item.postDate}</span>
+                                      </div>
+                                      <div className="md:flex-grow text-center px-12 ">
+                                      <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{item.title}</h2>
+                              <p class="leading-relaxed text-center px-12">{parse(item.body)}</p>
+                              <Link className="text-indigo-500 inline-flex items-center mt-4" to={"/post/" + item._id}>Read More 
+                                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M5 12h14"></path>
+                                  <path d="M12 5l7 7-7 7"></path>
+                                </svg>
+                              </Link>
+                                      </div>
                                     </div>
-                                    <div className="md:flex-grow">
-                                      <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{item.title}</h2>
-                                      <p className="leading-relaxed">{parse(item.body)}</p>
-                                      < Link className="text-indigo-500 inline-flex items-center mt-4" to={"/post/" + item._id}>Read More 
-                                      <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path d="M5 12h14"></path>
-                                          <path d="M12 5l7 7-7 7"></path>
-                                        </svg>
-                                      
-                                      
-                                      </Link>
-                                       
-                                    </div>
-                                  </>
-                                )
-                              })
-                            }
+                                  
+                                    <br />                                   </div>
+                                </>
+                              )
+                            })
+                            :
+                            "loading"
+                        }
 
-                          </div>
-
-
-
-                        </div>
                       </div>
                     </section>
                   </div>

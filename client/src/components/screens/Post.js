@@ -2,9 +2,12 @@ import React, { useEffect, useState, useContext } from "react"
 import { UserContext } from "../../App"
 import { useParams, Link } from "react-router-dom"
 import parse from "html-react-parser"
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function Post() {
     const [userPost, setUserPost] = useState(null)
-    const { state,dispatch } = useContext(UserContext)
+    const { state, dispatch } = useContext(UserContext)
+    const [body, setBody] = useState("")
     const [data, setData] = useState([])
     const { postid } = useParams()
     useEffect(() => {
@@ -80,33 +83,49 @@ export default function Post() {
                         <div className="flex flex-col sm:flex-row mt-10">
                             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
                                 <div className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
-                                   
-                                    <img className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"  viewBox="0 0 24 24"  onError={(event) => event.target.style.display = 'none'}  src={userPost ? userPost.postedBy.pic : "loading"} alt="load" />                
-                                        
-                                        
-   
-                                 
+
+                                    <img className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" viewBox="0 0 24 24" onError={(event) => event.target.style.display = 'none'} src={userPost ? userPost.postedBy.pic : "loading"} alt="load" />
+
+
+
+
                                 </div>
                                 <div className="flex flex-col items-center text-center justify-center">
                                     <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{userPost ? userPost.title : "loading"}</h2>
                                     <div className="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
-                                    <p className="text-base"><Link to={ userPost ? (userPost.postedBy._id !== state._id ? "/profile/" + userPost.postedBy._id : "/profile") : "loading"}> Posted By: {userPost ? userPost.postedBy.name : "loading"}</Link></p>
+                                    <p className="text-base"><Link to={userPost ? (userPost.postedBy._id !== state._id ? "/profile/" + userPost.postedBy._id : "/profile") : "loading"}> Posted By: {userPost ? userPost.postedBy.name : "loading"}</Link></p>
                                 </div>
                             </div>
                             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
                                 <p className="leading-relaxed text-lg mb-4">{parse(userPost ? userPost.body : "loading")}</p>
-                               
+
 
                                 <div class="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
                                     <form class="w-full max-w-xl bg-white rounded-lg px-4 pt-2" onSubmit={(e) => {
                                         e.preventDefault()
-                                        makeComment(e.target[0].value, userPost._id)
+                                        console.log(body)
+                                        makeComment(body, userPost._id)
 
                                     }}>
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>
                                             <div class="w-full md:w-full px-3 mb-2 mt-2">
-                                                <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='Type Your Comment' required></textarea>
+                                                <div className="App">
+                                                    <div className="editor">
+                                                        <CKEditor
+                                                            editor={ClassicEditor}
+                                                            data={body}
+                                                            onChange={(event, editor) => {
+                                                                // setBody(event.target.body)
+                                                                const data = editor.getData()
+                                                                setBody(data)
+                                                                console.log(data)
+                                                                
+                                                            }
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="w-full md:w-full flex items-start md:w-full px-3">
                                                 <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
@@ -121,36 +140,36 @@ export default function Post() {
                                             </div>
                                         </div>
                                     </form>
-                                    
+
 
                                 </div>
-                         
+
 
                             </div>
                             <h1 className="font-medium title-font mt-4 mb-4 text-black text-center text-lg py-8 px-6 border-gray-900">DISCUSSION</h1>
-                                {
-                                    userPost ?
-                                        userPost.comments.map(record => {
-                                            return (
-                                                <>
+                            {
+                                userPost ?
+                                    userPost.comments.map(record => {
+                                        return (
+                                            <>
                                                 <h6 key={record._id} className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0  sm:text-left">
                                                     <span style={{ fontWeight: "500" }} className="">
-                                                  {record.postedBy.name} :
-                                                    </span> 
-                                                    <span className="text-center">  {record.text}</span>
-                                                    </h6>
-
-                                                    <span className="text-right">
-                                                    {(record.postedBy._id) === state._id && (
-                                                        <i class="fas fa-trash" onClick={() => deleteComment(userPost._id,record._id)}></i>
-                                                    )}
+                                                        {record.postedBy.name} :
                                                     </span>
-                                               </>
-                                            )
-                                        })
-                                        :
-                                        "loading"
-                                }
+                                                    <span className="text-center"> {parse (record.text)}</span>
+                                                </h6>
+
+                                                <span className="text-right">
+                                                    {(record.postedBy._id) === state._id && (
+                                                        <i class="fas fa-trash" onClick={() => deleteComment(userPost._id, record._id)}></i>
+                                                    )}
+                                                </span>
+                                            </>
+                                        )
+                                    })
+                                    :
+                                    "loading"
+                            }
                         </div>
                     </div>
                 </div>

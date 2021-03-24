@@ -23,6 +23,12 @@ export default function Signup() {
         data.append("file", image)
         data.append("upload_preset", "bigbrain")
         data.append("cloud_name", "bigbrain")
+        if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+            // alert.show("Oh look, an alert!");
+            // M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
+            alert("Invalid email");
+            return
+          }
         fetch("https://api.cloudinary.com/v1_1/bigbrain/image/upload", {
             method: "post",
             body: data
