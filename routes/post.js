@@ -136,7 +136,6 @@ router.put("/unlike",requireLogin,(req,res)=>{
     })
 })
 
-//restful api
 router.put("/comment",requireLogin,(req,res)=>{
     const comment={
         text:req.body.text,
@@ -181,11 +180,12 @@ router.delete("/deletepost/:postId",requireLogin,(req,res)=>{
 })
 
 router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
+    
     const comment = { _id: req.params.comment_id };
     Post.findByIdAndUpdate(
       req.params.id,
       {
-        $pull: { comments: comment },
+        $push: { comments: comment },
       },
       {
         new: true, 
@@ -206,24 +206,44 @@ router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
 
 
 
-//   router.put("/like/:id/:comment_id",requireLogin,(req,res)=>{
-//     const comment = { _id: req.params.comment_id };
+  router.put("/likecomment/:id/:comment_id",requireLogin,(req,res)=>{
+    const comment = { _id: req.params.comment_id };
 
-//     Post.findByIdAndUpdate(req.body.postId,{
-//         $push:{commentsLike:req.user._id
-            
-//         }
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{commentLikes:req.user._id
+        }
         
-//     },{
-//         new:true
-//     }).exec((err,result)=>{
-//         if(err){
-//             return res.status(422).json({error:err})
-//         }
-//         else{
-//             res.json(result)
-//         }
-//     })
-// })
+    },{
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+        else{
+            console.log(result)
+            res.json(result)
+        }
+    })
+})
+
+router.put("/unlikecomment/:id/:comment_id",requireLogin,(req,res)=>{
+    const comment = { _id: req.params.comment_id };
+
+    Post.findByIdAndUpdate(req.body.postId,{
+        $pull:{commentLikes:req.user._id
+        }
+        
+    },{
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+        else{
+            console.log(result)
+            res.json(result)
+        }
+    })
+})
 
 module.exports = router

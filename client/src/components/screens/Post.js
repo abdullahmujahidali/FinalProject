@@ -18,7 +18,6 @@ export default function Post() {
         }).then(res => res.json())
             .then(result => {
                 console.log(result)
-
                 setUserPost(result.posts)
             })
     }, [postid])
@@ -71,7 +70,60 @@ export default function Post() {
                 window.location.reload()
             });
     };
+    const likePost = (commentid) => {
+        fetch(`/likecomment/${postid}/${commentid}`, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: commentid
+            })
+        }).then(res => res.json())
+            .then(result => {
+                const newData = data.map(item => {
+                    if (item._id === result._id) {
+                        console.log(result)
+                        return result
+                    }
+                    else {
+                        console.log(item)
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
 
+    }
+    const unlikePost = (id) => {
+        fetch(`/likecomment/${postid}/${id}`, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(result => {
+                console.log(result)
+                const newData = data.map(item => {
+                    if (item._id === result._id) {
+                        return result
+                    }
+                    else {
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <>
             <section className="text-gray-600 body-font" key={userPost ? userPost._id : "loading"}>
@@ -120,7 +172,7 @@ export default function Post() {
                                                                 const data = editor.getData()
                                                                 setBody(data)
                                                                 console.log(data)
-                                                                
+
                                                             }
                                                             }
                                                         />
@@ -156,14 +208,29 @@ export default function Post() {
                                                     <span style={{ fontWeight: "500" }} className="">
                                                         {record.postedBy.name} :
                                                     </span>
-                                                    <span className="text-center"> {parse (record.text)}</span>
+                                                    <span className="text-center"> {parse(record.text)}</span>
                                                 </h6>
 
-                                                <span className="text-right">
+                                                <span className="text-right text-black mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200 ">
                                                     {(record.postedBy._id) === state._id && (
                                                         <i class="fas fa-trash" onClick={() => deleteComment(userPost._id, record._id)}></i>
                                                     )}
+                                             
+                                                {userPost ? userPost.likes.includes(state._id)
+                                                    ?
+                                                    <i className="fas fa-heart "
+                                                        onClick={() => { unlikePost(userPost._id) }}
+                                                    ></i>
+                                                    :
+                                                    <i className="far fa-heart  "
+                                                        onClick={() => { likePost(userPost._id) }}
+                                                    ></i>
+                                                    :
+                                                    "loading"
+                                                }   &nbsp;
                                                 </span>
+
+                          {/* {userPost ? userPost.commentLikes.length : 0} likes */}
                                             </>
                                         )
                                     })
