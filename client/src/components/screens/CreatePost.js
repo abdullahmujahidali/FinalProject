@@ -77,7 +77,7 @@ export default function CreatePost() {
         }
     }
     const fetchUsers = (query) => {
-        setEmail(query)
+        setEmail(query.trim())
         fetch("/search-post", {
             method: "post",
             headers: {
@@ -165,7 +165,7 @@ export default function CreatePost() {
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                                     <h3 className="text-2xl font-semibold">
-                                        Search a User!
+                                        Checking Existing Posts!
                   </h3>
 
                                     <button
@@ -179,20 +179,25 @@ export default function CreatePost() {
 
                                 </div>
 
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t ">
-                                    <h2>Enter email to search a user! </h2> </div>
+                                <div className="flex items-start justify-between p-5 border-b border-solid border-red-300 rounded-t ">
+                                    <h2>Post with exsiting title will appear review them first before creating post <h3> <strong>Hit backspace in the field below to see results</strong></h3>
+                                    <h3 className="text-blue-600">If nothing appear means your post is unique!</h3>
+                                     </h2> 
+                                    
+                                    </div>
 
-                                {/*body*/}
+                                
                                 
                                 <input
                                     type="text"
                                     value={title}
                                     onChange={(e) => fetchUsers(e.target.value)}
-                                    className="px-8 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full disabled:opacity-50"
+                                    className="px-8 py-3 placeholder-gray-400 text-white bg-black  ml-8 mr-8 mt-8 rounded text-sm shadow focus:outline-none focus:shadow-outline "
                                     placeholder="Search Post"
                                     style={{ transition: "all .15s ease" }}
                              
                                 />
+                                <h3 className="text-2xl font-semibold text-center mb-2 mt-2 ">RESULTS</h3>
                                 <div className="relative p-6 flex-auto ">
                                     <ul className="collection " style={{ width: "100%" }}>
                                         {userDetails.map(item => {
