@@ -178,6 +178,18 @@ router.delete("/deletepost/:postId",requireLogin,(req,res)=>{
         }
     })
 })
+router.post("/search-post",(req,res)=>{
+    let userPattern = new RegExp("^"+req.body.query)
+    Post.find({title:{$regex:userPattern}})
+    .select("_id title body subject")
+    .then(post=>{
+        console.log({post})
+        res.json({post})
+    })
+    .catch(err=>{
+        console.log(err)
+    }) 
+})
 
 router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
     

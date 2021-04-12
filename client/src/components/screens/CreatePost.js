@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom"
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { useHistory, Link } from "react-router-dom"
 import FooterSmall from "../FooterSmall.js";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import M from "materialize-css"
+import { UserContext } from "../../App"
 
 export default function CreatePost() {
+    const [email, setEmail] = useState("")
     const history = useHistory()
     const [title, setTitle] = useState("")
     const [value, setValue] = useState('');
+    const [userDetails, setUserDetails] = useState([])
+    const searchModal = useRef(null)
+    const { state, dispatch } = useContext(UserContext)
     const [image, setImage] = useState("")
+    const [showModal, setShowModal] = React.useState(false);
     const [url, setUrl] = useState(undefined)
     const [body, setBody] = useState("")
     useEffect(() => {
@@ -70,6 +76,21 @@ export default function CreatePost() {
             uploadFields()
         }
     }
+    const fetchUsers = (query) => {
+        setEmail(query)
+        fetch("/search-post", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                query
+            })
+        }).then(res => res.json())
+            .then(results => {
+                setUserDetails(results.post)
+            })
+    }
     return (
         <>
             <div className="heading text-center font-bold text-2xl m-5 text-gray-800">New Post</div>
@@ -117,7 +138,7 @@ export default function CreatePost() {
                 </div>
                 <br />
                 <div className="flex  items-center justify-center bg-grey-lighter">
-                    <label className="w-64 flex flex-col items-center px-2 py-2 bg-black text-white rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+                    <label className=" flex flex-col items-center px-2 py-2 bg-black text-white rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
                         <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                         </svg>
@@ -126,11 +147,79 @@ export default function CreatePost() {
                     </label>
                 </div>
                 <div className="buttons flex">
-                    <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">Cancel</div>
-                    <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={() => PostData()}>Post</div>
+                    <div className="btn border border-gray-300 p-1 px-4 mt-2 font-semibold cursor-pointer text-gray-500 ml-auto">Cancel</div>
+                    <div className="btn border border-red-300 p-1 px-4  mt-2 font-semibold cursor-pointer text-gray-200 ml-2 bg-black" onClick={() => setShowModal(true)}>Review Post</div>
+                    <div className="btn border border-indigo-500 p-1 px-4  mt-2 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={() => PostData()}>Post</div>
                 </div>
             </div>
-            <FooterSmall absolute />
+
+            {showModal ? (
+                <>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
+                        ref={searchModal}
+                    >
+                        <div className="relative w-auto my-6 mx-auto max-w-3xl flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
+                            {/*content*/}
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                {/*header*/}
+                                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                                    <h3 className="text-2xl font-semibold">
+                                        Search a User!
+                  </h3>
+
+                                    <button
+                                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={() => setShowModal(false)}
+                                    >
+                                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                            ×
+                    </span>
+                                    </button>
+
+                                </div>
+
+                                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t ">
+                                    <h2>Enter email to search a user! </h2> </div>
+
+                                {/*body*/}
+                                
+                                <input
+                                    type="text"
+                                    value={title}
+                                    onChange={(e) => fetchUsers(e.target.value)}
+                                    className="px-8 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full disabled:opacity-50"
+                                    placeholder="Search Post"
+                                    style={{ transition: "all .15s ease" }}
+                             
+                                />
+                                <div className="relative p-6 flex-auto ">
+                                    <ul className="collection " style={{ width: "100%" }}>
+                                        {userDetails.map(item => {
+                                            return <Link to={"/post/" + item._id} onClick={() => {
+                                                setEmail('')
+                                                setShowModal(false)
+                                            }}> <li className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"><p><strong>{item.subject}:   </strong></p> &nbsp; &nbsp;  {item.title}</li></Link>
+                                        })}
+
+                                    </ul>
+                                </div>
+                                {/*footer*/}
+                                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                                    <button
+                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() => setShowModal(false)}
+                                    >
+                                        Close
+                  </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+            ) : null}
         </>
     )
 }

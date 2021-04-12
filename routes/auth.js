@@ -9,7 +9,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport")
 const { JWT_SECRET } = require("../config/keys")
 const requireLogin = require("../middleware/requireLogin")
 const crypto = require("crypto")
-const {SENDGRID_API,EMAIL} = require("../config/keys")
+const { SENDGRID_API, EMAIL } = require("../config/keys")
 
 let htmlTemplate = `
 
@@ -266,137 +266,137 @@ let htmlTemplate = `
   </html>`
 
 const transporter = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        api_key: SENDGRID_API
-    }
+  auth: {
+    api_key: SENDGRID_API
+  }
 }))
 router.post("/signup", (req, res) => {
-    const { name, email, password, country, organization, role, intro,pic } = req.body
-    if (!email || !password || !name) {
-        return res.status(422).json({ error: "Please add all the fields" })
-    }
-    User.findOne({ email: email })
-        .then((savedUser) => {
-            if (savedUser) {
-                return res.status(422).json({ error: "User Already Exists" })
-            }
-            bcrypt.hash(password, 12)
-                .then(hashedpassword => {
-                    const user = new User({
-                        email,
-                        password: hashedpassword,
-                        name,
-                        pic,
-                        country,
-                        organization,
-                        role,
-                        intro
-                    })
-                    user.save()
-                        .then(user => {
-                            // transporter.sendMail({
-                            //     to: user.email,
-                            //     from: "umtfyp2020@gmail.com",
-                            //     subject: "Sign up Success",
-                            //     html: htmlTemplate
-                            // })
-                            res.json({ message: user.name + ' joined BigBrains' })
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
-                })
-
-        }).catch(err => {
-            console.log(err)
+  const { name, email, password, country, organization, role, intro, pic } = req.body
+  if (!email || !password || !name) {
+    return res.status(422).json({ error: "Please add all the fields" })
+  }
+  User.findOne({ email: email })
+    .then((savedUser) => {
+      if (savedUser) {
+        return res.status(422).json({ error: "User Already Exists" })
+      }
+      bcrypt.hash(password, 12)
+        .then(hashedpassword => {
+          const user = new User({
+            email,
+            password: hashedpassword,
+            name,
+            pic,
+            country,
+            organization,
+            role,
+            intro
+          })
+          user.save()
+            .then(user => {
+              // transporter.sendMail({
+              //     to: user.email,
+              //     from: "umtfyp2020@gmail.com",
+              //     subject: "Sign up Success",
+              //     html: htmlTemplate
+              // })
+              res.json({ message: user.name + ' joined BigBrains' })
+            })
+            .catch(err => {
+              console.log(err)
+            })
         })
+
+    }).catch(err => {
+      console.log(err)
+    })
 })
 
 router.post("/signin", (req, res) => {
-    const { email, password } = req.body
-    if (!email) {
-        return res.status(422).json({ error: "Please provide the email" })
-    }
-    else if (!password) {
-        return res.status(422).json({ error: "Please provide the password" })
-    }
-    User.findOne({ email: email })
-        .then(savedUser => {
-            if (!savedUser) {
-                return res.status(422).json({ error: "Invalid Email or Password" })
-            }
-            bcrypt.compare(password, savedUser.password)
-                .then(doMatch => {
-                    if (doMatch) {
-                        //  res.json({message:"Sucessfully Logged In!"})
-                        const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET)
-                        const { _id, name, email, following, follower, pic, country, organization, role, intro } = savedUser
-                        res.json({ token, user: { _id, name, email, following, follower, pic, country, organization, role, intro } })
-                    }
-                    else {
-                        return res.status(422).json({ error: "Invalid Email or Password" })
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+  const { email, password } = req.body
+  if (!email) {
+    return res.status(422).json({ error: "Please provide the email" })
+  }
+  else if (!password) {
+    return res.status(422).json({ error: "Please provide the password" })
+  }
+  User.findOne({ email: email })
+    .then(savedUser => {
+      if (!savedUser) {
+        return res.status(422).json({ error: "Invalid Email or Password" })
+      }
+      bcrypt.compare(password, savedUser.password)
+        .then(doMatch => {
+          if (doMatch) {
+            //  res.json({message:"Sucessfully Logged In!"})
+            const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET)
+            const { _id, name, email, following, follower, pic, country, organization, role, intro } = savedUser
+            res.json({ token, user: { _id, name, email, following, follower, pic, country, organization, role, intro } })
+          }
+          else {
+            return res.status(422).json({ error: "Invalid Email or Password" })
+          }
         })
+        .catch(err => {
+          console.log(err)
+        })
+    })
 })
 
 router.post("/reset-password", (req, res) => {
-    crypto.randomBytes(32, (err, buffer) => {
-        if (err) {
-            console.log(err)
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err)
+    }
+    const token = buffer.toString("hex")
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (!user) {
+          return res.status(422).json({ error: "User doesn't exists" })
         }
-        const token = buffer.toString("hex")
-        User.findOne({ email: req.body.email })
-            .then(user => {
-                if (!user) {
-                    return res.status(422).json({ error: "User doesn't exists" })
-                }
-                user.resetToken = token
-                user.expireToken = Date.now() + 3600000
-                user.save().then((result) => {
-                    transporter.sendMail({
-                        to: user.email,
-                        from: "umtfyp2020@gmail.com",
-                        subject: "Reset Password Request",
-                        html: `<p> You requested for reseet password  </p>
-                    <h5>Click on the  <a href="${EMAIL}/reset/${token}"> link </a> to reset password</h5>
+        user.resetToken = token
+        user.expireToken = Date.now() + 3600000
+        user.save().then((result) => {
+          transporter.sendMail({
+            to: user.email,
+            from: "umtfyp2020@gmail.com",
+            subject: "Reset Password Request",
+            html: `<p> You requested for reseet password  </p>
+                    <h5>Click on the  <a href="${EMAIL}/reset/${token}">
+                     link </a> to reset password</h5>
                     `
-                    })
-                    res.json({ message:"Check your email"})
-                })
-            })
-    })
-
+          })
+          res.json({ message: "Check your email" })
+        })
+      })
+  })
 })
 
 
 
 router.post("/new-password", (req, res) => {
-    const newPassword=req.body.password
-    const sentToken=req.body.token
-    User.findOne({
-        resetToken:sentToken,expireToken:{$gt:Date.now()}
-    })
-    .then(user=>{
-        if(!user){
-            return res.status(422).json({error:"Try again session expired!"})
-        }
-        bcrypt.hash(newPassword,12)
-        .then(hashedpassword=>{
-            user.password=hashedpassword
-            user.resetToken=undefined
-            user.expireToken=undefined
-            user.save()
-            .then((savedUser)=>{
-                res.json({message:"Password Sucessfully Updated"})
+  const newPassword = req.body.password
+  const sentToken = req.body.token
+  User.findOne({
+    resetToken: sentToken, expireToken: { $gt: Date.now() }
+  })
+    .then(user => {
+      if (!user) {
+        return res.status(422).json({ error: "Try again session expired!" })
+      }
+      bcrypt.hash(newPassword, 12)
+        .then(hashedpassword => {
+          user.password = hashedpassword
+          user.resetToken = undefined
+          user.expireToken = undefined
+          user.save()
+            .then((savedUser) => {
+              res.json({ message: "Password Sucessfully Updated" })
             })
         })
     })
-    .catch(err=>{
-        console.log(err)
+    .catch(err => {
+      console.log(err)
     })
 })
 

@@ -129,8 +129,16 @@ export default function Post() {
             <section className="text-gray-600 body-font" key={userPost ? userPost._id : "loading"}>
                 <div className="container px-12 py-20 mx-auto flex flex-col">
                     <div className="">
-                        <div className="rounded-lg h-64  px-12 overflow-hidden">
-                            <img alt="content" className="" src={userPost ? userPost.photo : "loading"} />
+                        <div className="rounded-lg h-64 px-12 overflow-hidden">
+                            <div className="px-12 ">
+                            <div className="px-12">
+                            <div className="px-12">
+                            <div className="px-12">
+                            <div className="px-12"> <div className="px-12">
+                            <div className="px-12"> <div className="px-12">
+                                <img alt="content" className="px-12" src={userPost ? userPost.photo : "loading"} />
+                            </div></div></div> </div></div></div></div>
+                            </div>
                         </div>
                         <div className="flex flex-col sm:flex-row mt-10">
                             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
@@ -215,22 +223,22 @@ export default function Post() {
                                                     {(record.postedBy._id) === state._id && (
                                                         <i class="fas fa-trash" onClick={() => deleteComment(userPost._id, record._id)}></i>
                                                     )}
-                                             
-                                                {userPost ? userPost.likes.includes(state._id)
-                                                    ?
-                                                    <i className="fas fa-heart "
-                                                        onClick={() => { unlikePost(userPost._id) }}
-                                                    ></i>
-                                                    :
-                                                    <i className="far fa-heart  "
-                                                        onClick={() => { likePost(userPost._id) }}
-                                                    ></i>
-                                                    :
-                                                    "loading"
-                                                }   &nbsp;
+
+                                                    {userPost ? userPost.likes.includes(state._id)
+                                                        ?
+                                                        <i className="fas fa-heart "
+                                                            onClick={() => { unlikePost(userPost._id) }}
+                                                        ></i>
+                                                        :
+                                                        <i className="far fa-heart  "
+                                                            onClick={() => { likePost(userPost._id) }}
+                                                        ></i>
+                                                        :
+                                                        "loading"
+                                                    }   &nbsp;
                                                 </span>
 
-                          {/* {userPost ? userPost.commentLikes.length : 0} likes */}
+                                                {/* {userPost ? userPost.commentLikes.length : 0} likes */}
                                             </>
                                         )
                                     })

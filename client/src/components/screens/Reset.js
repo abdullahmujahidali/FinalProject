@@ -2,13 +2,14 @@ import React, { useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import FooterSmall from "../Footer.js";
 import M from "materialize-css"
+
 export default function Reset() {
     const history = useHistory()
     const [email, setEmail] = useState("")
     const PostData = () => {
         if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-            // alert.show("Oh look, an alert!");
-            // M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
+            alert.show("Oh invalid email");
+            M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
             alert("Invalid email");
             return
         }
@@ -23,19 +24,9 @@ export default function Reset() {
         }).then(res => res.json())
             .then(data => {
                 if (data.error) {
-                    // M.toast({html: 'I am a toast!', classes: 'rounded'});
-                    //  M.toast({html: data.error,classes:'#0d47a1 red darken-3'})
+                     M.toast({html: data.error,classes:'#0d47a1 red darken-3'})
                 }
                 else {
-                    // dispatch({type:"USER",payload:data.user})
-                    // console.log(data.message)
-                    // <div class="bg-red-lightest border border-red-light text-red-dark pl-4 pr-8 py-3 rounded relative" role="alert">
-                    //     <strong class="font-bold">Brbrbr!</strong>
-                    //     <span class="block sm:inline">{data.message}</span>
-                    //     <span class="absolute pin-t pin-b pin-r pr-2 py-3">
-                    //         <svg class="h-6 w-6 text-red" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
-                    //     </span>
-                    // </div>
                     M.toast({ html: data.message, classes: '#0d47a1 blue darken-4' });
                     history.push('/signin')
                 }
@@ -43,6 +34,7 @@ export default function Reset() {
                 console.log(err)
             })
     }
+    
     return (
         <>
 
