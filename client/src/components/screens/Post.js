@@ -70,7 +70,8 @@ export default function Post() {
                 window.location.reload()
             });
     };
-    const likePost = (commentid) => {
+    const likePost = (postid,commentid) => {
+        console.log(commentid)
         fetch(`/likecomment/${postid}/${commentid}`, {
             method: "put",
             headers: {
@@ -143,12 +144,7 @@ export default function Post() {
                         <div className="flex flex-col sm:flex-row mt-10">
                             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
                                 <div className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
-
                                     <img className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" viewBox="0 0 24 24" onError={(event) => event.target.style.display = 'none'} src={userPost ? userPost.postedBy.pic : "loading"} alt="load" />
-
-
-
-
                                 </div>
                                 <div className="flex flex-col items-center text-center justify-center">
                                     <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{userPost ? userPost.title : "loading"}</h2>
@@ -158,14 +154,11 @@ export default function Post() {
                             </div>
                             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
                                 <p className="leading-relaxed text-lg mb-4">{parse(userPost ? userPost.body : "loading")}</p>
-
-
                                 <div class="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
                                     <form class="w-full max-w-xl bg-white rounded-lg px-4 pt-2" onSubmit={(e) => {
                                         e.preventDefault()
                                         console.log(body)
                                         makeComment(body, userPost._id)
-
                                     }}>
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>
@@ -180,7 +173,6 @@ export default function Post() {
                                                                 const data = editor.getData()
                                                                 setBody(data)
                                                                 console.log(data)
-
                                                             }
                                                             }
                                                         />
@@ -227,18 +219,19 @@ export default function Post() {
                                                     {userPost ? userPost.likes.includes(state._id)
                                                         ?
                                                         <i className="fas fa-heart "
-                                                            onClick={() => { unlikePost(userPost._id) }}
+                                                            onClick={() => { unlikePost(userPost._id, record._id) }}
                                                         ></i>
                                                         :
                                                         <i className="far fa-heart  "
-                                                            onClick={() => { likePost(userPost._id) }}
+                                                            onClick={() => { likePost(userPost._id, record._id) }}
                                                         ></i>
                                                         :
                                                         "loading"
                                                     }   &nbsp;
+                                                    {userPost.commentLikes.length ? userPost.commentLikes.length : 0} likes
                                                 </span>
 
-                                                {/* {userPost ? userPost.commentLikes.length : 0} likes */}
+
                                             </>
                                         )
                                     })
