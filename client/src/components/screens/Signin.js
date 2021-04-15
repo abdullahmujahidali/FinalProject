@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom"
-import {UserContext} from "../../App"
+import { useHistory,Link } from "react-router-dom"
+import { UserContext } from "../../App"
 
 import logoP from "../assets/logoBlack.png"
 import M from "materialize-css"
@@ -9,7 +9,7 @@ import FooterSmall from "../FooterSmall.js";
 import "../../App.css"
 
 export default function SignIn() {
-  const {dispatch}=useContext(UserContext)
+  const { dispatch } = useContext(UserContext)
   const history = useHistory()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -39,7 +39,7 @@ export default function SignIn() {
         else {
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
-          dispatch({type:"USER",payload:data.user})
+          dispatch({ type: "USER", payload: data.user })
           // dispatch({type:"USER",payload:data.user})
 
           // console.log(data.message)
@@ -70,7 +70,7 @@ export default function SignIn() {
               <div className="w-full lg:w-3/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
                   <div className="rounded-t mb-0 px-12 py-6">
-                   
+
                     <img
                       alt="..."
                       className=" rounded-lg px-12 "
@@ -111,7 +111,7 @@ export default function SignIn() {
                           htmlFor="grid-password"
                         >
                           Password
-                                                </label>
+                        </label>
                         <input
                           type="password"
                           value={password}
@@ -128,7 +128,7 @@ export default function SignIn() {
                           </span>
                         </label>
                       </div>
-
+                    
                       <div className="text-center mt-6">
                         <button
                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
@@ -138,11 +138,15 @@ export default function SignIn() {
                         >
                           Sign In
                         </button>
+                        <p class="text-center my-4">
+                            <Link to="/signup" class="text-grey-dark text-sm no-underline hover:text-grey-darker">I don't have an account</Link>
+                        </p>
+
                       </div>
                     </form>
                   </div>
                 </div>
-             
+
               </div>
             </div>
           </div>

@@ -215,7 +215,7 @@ export default function Landing() {
                       Amna Ramzan
                     </h5>
                     <p className="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                      Marketing Specialist
+                      Backend Developers
                     </p>
                     <div className="mt-6">
                       <button
@@ -285,32 +285,32 @@ export default function Landing() {
                       Abdullah Mujahid
                     </h5>
                     <p className="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                      Founder and CEO
+                      Full Stack React Developer
                     </p>
                     <div className="mt-6">
                       <button
                         className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                       >
-                        <i className="fab fa-dribbble"></i>
+                        <a href="https://dribbble.com/abdullahmujahidali">   <i className="fab fa-dribbble"></i> </a>
                       </button>
                       <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        className="bg-black text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                       >
-                        <i className="fab fa-google"></i>
+                         <a href="https://github.com/abdullahmujahidali">  <i className="fab fa-github"></i> </a>
                       </button>
                       <button
                         className="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                       >
-                        <i className="fab fa-twitter"></i>
+                       <a href="https://twitter.com/abdulladgaf"> <i className="fab fa-twitter"></i> </a>
                       </button>
                       <button
                         className="bg-gray-800 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
+                        type="button" 
                       >
-                        <i className="fab fa-instagram"></i>
+                      <a href="https://www.instagram.com/abdullahmujahidali/">  <i className="fab fa-instagram"></i></a>
                       </button>
                     </div>
                   </div>
@@ -357,11 +357,10 @@ export default function Landing() {
                   <i className="fas fa-medal text-xl"></i>
                 </div>
                 <h6 className="text-xl mt-5 font-semibold text-white">
-                  Excelent Services
+                  No more Redundant Load
                 </h6>
                 <p className="mt-2 mb-4 text-gray-500">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Reduced the amount of load this is done and checked when user is trying to create a post. He/She is notified if such post is already created.
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -369,11 +368,10 @@ export default function Landing() {
                   <i className="fas fa-poll text-xl"></i>
                 </div>
                 <h5 className="text-xl mt-5 font-semibold text-white">
-                  Grow your market
+                  Grow your profile
                 </h5>
                 <p className="mt-2 mb-4 text-gray-500">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Providing all the necessary social media components that are sufficient to build your profile.
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -384,8 +382,7 @@ export default function Landing() {
                   Launch time
                 </h5>
                 <p className="mt-2 mb-4 text-gray-500">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Hybrid mobile application available for both iPhone and Android.
                 </p>
               </div>
             </div>
@@ -396,7 +393,7 @@ export default function Landing() {
             <div className="flex flex-wrap justify-center lg:-mt-64 -mt-48">
               <div className="w-full lg:w-6/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300" data-aos="fade-up-right">
-                  <div className="flex-auto p-5 lg:p-10 bg-blue-700 text-white">
+                  <div className="flex-auto p-5 lg:p-10 bg-blue-600 text-white">
                     <h4 className="text-2xl font-semibold">
                       Want to work with us?
                     </h4>

@@ -5,6 +5,9 @@ import parse from "html-react-parser"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function Post() {
+    function refreshPage() {
+        window.location.reload();
+      }
     const [userPost, setUserPost] = useState(null)
     const { state, dispatch } = useContext(UserContext)
     const [body, setBody] = useState("")
@@ -37,12 +40,12 @@ export default function Post() {
                 console.log(result)
                 const newData = data.map(item => {
                     if (item._id === result._id) {
+                        
                         return result
                     }
                     else {
                         return item
                     }
-
                 })
                 setData(newData)
             })
@@ -61,13 +64,14 @@ export default function Post() {
             .then((result) => {
                 const newData = data.map((item) => {
                     if (item._id === result._id) {
+                        refreshPage();
                         return result;
                     } else {
                         return item;
                     }
                 });
                 setData(newData);
-                window.location.reload()
+                refreshPage();
             });
     };
     const likePost = (postid,commentid) => {
@@ -230,8 +234,6 @@ export default function Post() {
                                                     }   &nbsp;
                                                     {userPost.commentLikes.length ? userPost.commentLikes.length : 0} likes
                                                 </span>
-
-
                                             </>
                                         )
                                     })
@@ -242,7 +244,6 @@ export default function Post() {
                     </div>
                 </div>
             </section>
-
         </>
     )
 }

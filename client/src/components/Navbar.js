@@ -102,8 +102,21 @@ export default function Navbar(props) {
        FOLLOWINGS POSTS
       </Link>
     </li>,
-
     <li key="6" className="flex items-center">
+      <Link
+        className={
+          (props.transparent
+            ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
+            : "text-white hover:text-gray-600") +
+          " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+        }
+        to="/subjectpost"
+      >
+       SUBJECT POSTS
+      </Link>
+    </li>,
+
+    <li key="7" className="flex items-center">
       <button
         className={
           (props.transparent

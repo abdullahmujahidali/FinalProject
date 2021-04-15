@@ -78,6 +78,7 @@ export default function CreatePost() {
     }
     const fetchUsers = (query) => {
         setEmail(query.trim())
+
         fetch("/search-post", {
             method: "post",
             headers: {
@@ -155,6 +156,7 @@ export default function CreatePost() {
 
             {showModal ? (
                 <>
+                
                     <div
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
                         ref={searchModal}
@@ -181,13 +183,13 @@ export default function CreatePost() {
 
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-red-300 rounded-t ">
                                     <h2>Post with exsiting title will appear review them first before creating post <h3> <strong>Hit backspace in the field below to see results</strong></h3>
-                                    <h3 className="text-blue-600">If nothing appear means your post is unique!</h3>
-                                     </h2> 
-                                    
-                                    </div>
+                                        <h3 className="text-blue-600">If nothing appear means your post is unique!</h3>
+                                    </h2>
 
-                                
-                                
+                                </div>
+
+
+
                                 <input
                                     type="text"
                                     value={title}
@@ -195,7 +197,7 @@ export default function CreatePost() {
                                     className="px-8 py-3 placeholder-gray-400 text-white bg-black  ml-8 mr-8 mt-8 rounded text-sm shadow focus:outline-none focus:shadow-outline "
                                     placeholder="Search Post"
                                     style={{ transition: "all .15s ease" }}
-                             
+
                                 />
                                 <h3 className="text-2xl font-semibold text-center mb-2 mt-2 ">RESULTS</h3>
                                 <div className="relative p-6 flex-auto ">
@@ -214,6 +216,7 @@ export default function CreatePost() {
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
+
                                         onClick={() => setShowModal(false)}
                                     >
                                         Close

@@ -28,16 +28,16 @@ const postSchema = new mongoose.Schema({
             type: ObjectId, 
             ref: "User" 
         },
-       
+        commentLikes:[{
+            type: ObjectId,
+            ref: "User"
+        }],
         commentDate:{
             type:Date,
             default:Date.now
         }
     }],
-    commentLikes:[{
-        type: ObjectId,
-        ref: "User"
-    }],
+   
     postedBy: {
         type: ObjectId,
         ref: "User"

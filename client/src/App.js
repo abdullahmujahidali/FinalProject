@@ -13,6 +13,8 @@ import Post from "./components/screens/Post"
 import Subscribed from "./components/screens/SubscribedPost"
 import Reset from "./components/screens/Reset"
 import NewPassword from "./components/screens/NewPassword"
+import SubjectPost from "./components/screens/SubjectPost"
+
 
 import CreatePost from "./components/screens/CreatePost"
 import { reducer, initialState } from "./reducers/userReducer"
@@ -25,7 +27,7 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem("user"))
     if (user) {
       dispatch({ type: "USER", payload: user })
-      history.push("/home")
+      // history.push("/home")
 
     }
     else {
@@ -62,6 +64,10 @@ const Routing = () => {
 
       <Route path="/home">
         <PostHome />
+      </Route>
+
+      <Route path="/subjectpost">
+        <SubjectPost />
       </Route>
 
       <Route path="/myfollowerspost">

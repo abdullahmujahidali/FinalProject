@@ -28,7 +28,7 @@ export default function Signup() {
             // M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
             alert("Invalid email");
             return
-          }
+        }
         fetch("https://api.cloudinary.com/v1_1/bigbrain/image/upload", {
             method: "post",
             body: data
@@ -73,14 +73,14 @@ export default function Signup() {
             })
     }
     const PostData = () => {
-		if (image) {
-			uploadPic()
-		}
-		else {
-			uploadFields()
-		}
+        if (image) {
+            uploadPic()
+        }
+        else {
+            uploadFields()
+        }
 
-	}
+    }
 
     return (
         <>
@@ -141,16 +141,14 @@ export default function Signup() {
                                     />
                                 </div>
                                 <div class="overflow-hidden relative w-64 mt-4 mb-4">
-                                    <button class="bg-blue hover:bg-blue-light text-black font-bold py-2 px-4 w-full inline-flex items-center">
-                                        <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
+                                    <label className=" flex flex-col items-center px-2 py-2 bg-black text-white rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+                                        <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                                         </svg>
-                                        <span className="mt-2 text-base leading-normal">Upload Profile Picture</span>
-                                        <input className="hidden cursor-pointer absolute block py-2 px-4 w-full opacity-0 pin-r pin-t" type="file" onChange={(e) => setImage(e.target.files[0])} />
-                                    </button>
-                          
-                                    
+                                        <span className="mt-2 text-base leading-normal">Upload profile picture</span>
+                                        <input type='file' className="hidden" onChange={(e) => setImage(e.target.files[0])} />
+                                    </label>
+
                                 </div>
                                 <div className="text-center mt-6">
                                     <button
@@ -169,19 +167,7 @@ export default function Signup() {
                         </p>
                     </div>
                 </div>
-                <footer class="w-full bg-grey-lighter py-8">
-                    <div className="w-full md:w-4/12 px-4">
-                        <div className="text-sm text-black font-semibold py-1">
-                            Copyright © {new Date().getFullYear()}{" "}
-                            <a
-                                href="https://connexionmern.herokuapp.com/"
-                                className="text-black hover:text-red-500 text-sm font-semibold py-1"
-                            >
-                                Abdullah Mujahid
-                </a>
-                        </div>
-                    </div>
-                </footer>
+                
             </div>
         </>
     );
