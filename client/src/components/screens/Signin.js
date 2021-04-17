@@ -5,10 +5,12 @@ import { UserContext } from "../../App"
 import logoP from "../assets/logoBlack.png"
 import M from "materialize-css"
 import FooterSmall from "../FooterSmall.js";
+import Toasts from 'toasts';
 
 import "../../App.css"
 
 export default function SignIn() {
+  
   const { dispatch } = useContext(UserContext)
   const history = useHistory()
   const [email, setEmail] = useState("")
@@ -33,17 +35,12 @@ export default function SignIn() {
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
-          // M.toast({html: 'I am a toast!', classes: 'rounded'});
-          //  M.toast({html: data.error,classes:'#0d47a1 red darken-3'})
+           M.toast({html: data.error,classes:'#0d47a1 red darken-3'})
         }
         else {
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
           dispatch({ type: "USER", payload: data.user })
-          // dispatch({type:"USER",payload:data.user})
-
-          // console.log(data.message)
-
           M.toast({ html: "Login Success", classes: '#0d47a1 blue darken-4' });
           history.push('/home')
 

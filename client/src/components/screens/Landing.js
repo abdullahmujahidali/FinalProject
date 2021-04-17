@@ -12,7 +12,6 @@ import aboutPic from "../assets/about.jpg"
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-
 export default function Landing() {
   useEffect(()=>{
     Aos.init({

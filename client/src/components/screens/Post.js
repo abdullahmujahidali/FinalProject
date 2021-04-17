@@ -28,7 +28,7 @@ export default function Post() {
         fetch("/comment", {
             method: "put",
             headers: {
-                "Content-type": "application/json",
+                "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({

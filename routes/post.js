@@ -5,9 +5,7 @@ const Post = mongoose.model("Post")
 const User = mongoose.model("User")
 var dateFormat = require("dateformat");
 var now = new Date();
-
 const requireLogin = require("../middleware/requireLogin")
-
 router.get("/allpost", requireLogin, (req, res) => {
     Post.find()
         .populate("postedBy", "_id name pic role organization")
@@ -19,7 +17,6 @@ router.get("/allpost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
-
 router.post("/createpost", requireLogin, (req, res) => {
     const { subject, title, body, photo } = req.body
     if (!title || !subject || !body) {
@@ -42,10 +39,9 @@ router.post("/createpost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
-
 router.get("/getsubpost", requireLogin, (req, res) => {
     Post.find({ postedBy: { $in: req.user.following } })
-        .populate("postedBy", "_id name pic")
+        .populate("postedBy", "_id name pic role organization")
         .sort("-createdAt")
         .then(posts => {
             res.json({ posts })
@@ -54,7 +50,6 @@ router.get("/getsubpost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
-
 router.get("/mypost", requireLogin, (req, res) => {
     Post.find({ postedBy: req.user._id })
         .populate("PostedBy", "_id name pic role organization intro country")
@@ -65,7 +60,6 @@ router.get("/mypost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
-
 router.get("/post/:id", requireLogin, (req, res) => {
     Post.findOne({ _id: req.params.id })
         .populate("comments.postedBy", "_id name pic")
@@ -200,7 +194,7 @@ router.post("/search-post", (req, res) => {
 })
 router.post("/search-subject", (req, res) => {
     let userPattern = new RegExp("^" + req.body.query)
-    Post.find({subject: { $regex: userPattern } })
+    Post.find({ subject: { $regex: userPattern } })
         .select("_id title body subject")
         .then(post => {
             console.log({ post })
@@ -216,7 +210,6 @@ router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
     Post.findByIdAndUpdate(
         req.params.id,
         {
-
             $pull: { comments: comment },
         },
         {

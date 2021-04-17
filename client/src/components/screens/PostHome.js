@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import Footer from "../Footer.js";
 import parse from "html-react-parser"
 import { UserContext } from "../../App"
+import Spinner from "./spinner.gif"
 export default function PostHome() {
   const [data, setData] = useState([])
   const { state } = useContext(UserContext)
@@ -101,7 +102,7 @@ export default function PostHome() {
                     <br />
                     <div className="p-12 md:w-1/2 flex flex-col items-start shadow-2xl px-8 py-4 " key={item._id}>
                       <span className="inline-block py-1 px-0 rounded bg-indigo-50 text-indigo-500 text-s font-medium tracking-widest">{item.subject}</span>
-                      <p className="inline-block py-1 px-0 rounded bg-indigo-50 text-gray-500 text-xs font-medium tracking-widest">  {item ?  item.postDate : "loading"} </p>
+                      <p className="inline-block py-1 px-0 rounded bg-indigo-50 text-gray-500 text-xs font-medium tracking-widest">  {item ?  item.postDate : <Spinner />} </p>
                       <h2 className="sm:text-3xl text-2xl title-font font-medium m2-4 mb-2"><Link to={"/post/" + item._id}> {item.title} </Link></h2>
                     
                       <p className="leading-relaxed mb-4">  {parse(item.body)} </p>
