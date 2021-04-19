@@ -128,7 +128,6 @@ export default function PostHome() {
                             ></i>
                           }   &nbsp;
                           {item.likes.length} likes 
-                          
                         </span>
                         <span className="text-red-700 inline-flex items-center leading-none text-sm">
                           <svg className="w-4 h-4 mr-1" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -138,7 +137,7 @@ export default function PostHome() {
                         </span>
                       </div>
                       <div className="inline-flex items-center">
-                        <img alt="blog" src={item ?item.postedBy.pic : "loading"} className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
+                        <img alt="userInfo" src={item ?item.postedBy.pic : "loading"} className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
                         <span className="flex-grow flex flex-col pl-4">
                           <span className="title-font font-medium"> <Link to={item.postedBy._id !== state._id ? "/profile/" + item.postedBy._id : "/profile"}> {item.postedBy.name}</Link></span>
                           <span className="text-black text-xs tracking-widest mt-0.5">{item.postedBy.role}, {item.postedBy.organization}</span>

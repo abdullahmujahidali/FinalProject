@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory,Link } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import { UserContext } from "../../App"
 
 import logoP from "../assets/logoBlack.png"
@@ -10,7 +10,7 @@ import Toasts from 'toasts';
 import "../../App.css"
 
 export default function SignIn() {
-  
+
   const { dispatch } = useContext(UserContext)
   const history = useHistory()
   const [email, setEmail] = useState("")
@@ -18,8 +18,7 @@ export default function SignIn() {
   const PostData = () => {
 
     if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-      // alert.show("Oh look, an alert!");
-      // M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
+      M.toast({ html: 'Invalid email', classes: '#0000FF' })
       alert("Invalid email");
       return
     }
@@ -41,9 +40,8 @@ export default function SignIn() {
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
           dispatch({ type: "USER", payload: data.user })
-          M.toast({ html: "Login Success", classes: '#0d47a1 blue darken-4' });
+          M.toast({ html: "Login Success", classes: 'rounded' });
           history.push('/home')
-
         }
       }).catch(err => {
         console.log(err)
@@ -57,7 +55,6 @@ export default function SignIn() {
           <div
             className="absolute top-0 w-full h-full bg-transparent"
             style={{
-              // backgroundImage: `url(${bground})`,
               backgroundSize: "100%",
               backgroundRepeat: "no-repeat"
             }}
@@ -67,7 +64,6 @@ export default function SignIn() {
               <div className="w-full lg:w-3/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
                   <div className="rounded-t mb-0 px-12 py-6">
-
                     <img
                       alt="..."
                       className=" rounded-lg px-12 "
@@ -91,7 +87,7 @@ export default function SignIn() {
                           htmlFor="grid-password"
                         >
                           Email
-                                                </label>
+                        </label>
                         <input
                           type="email"
                           value={email}
@@ -125,7 +121,7 @@ export default function SignIn() {
                           </span>
                         </label>
                       </div>
-                    
+
                       <div className="text-center mt-6">
                         <button
                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
@@ -136,7 +132,7 @@ export default function SignIn() {
                           Sign In
                         </button>
                         <p class="text-center my-4">
-                            <Link to="/signup" class="text-grey-dark text-sm no-underline hover:text-grey-darker">I don't have an account</Link>
+                          <Link to="/signup" class="text-grey-dark text-sm no-underline hover:text-grey-darker">I don't have an account</Link>
                         </p>
 
                       </div>

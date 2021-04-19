@@ -25,7 +25,7 @@ export default function Signup() {
         data.append("cloud_name", "bigbrain")
         if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
             // alert.show("Oh look, an alert!");
-            // M.toast({ html: 'Invalid email', classes: '#0d47a1 red darken-4' })
+            M.toast({ html: 'Invalid email', classes: '#fff' })
             alert("Invalid email");
             return
         }

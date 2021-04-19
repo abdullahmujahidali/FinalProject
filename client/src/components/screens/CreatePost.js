@@ -104,19 +104,19 @@ export default function CreatePost() {
                         onChange={(e) => setValue(e.target.value)}
                     >
                         <option  >Choose a Category</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Biology">Biology</option>
-                        <option value="Physics ">Physics</option>
-                        <option value="Chemistry">Chemistry</option>
-                        <option value="English">English</option>
-                        <option value="World History">World History</option>
-                        <option value="General">General</option>
-                        <option value="Engineering">Engineering</option>
                         <option value="Applied Arts">Applied Arts</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Foreign Language">Foreign Language</option>
+                        <option value="Biology">Biology</option>
                         <option value="Business">Business & Administration</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="English">English</option>
+                        <option value="Foreign Language">Foreign Language</option>
+                        <option value="General">General</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics ">Physics</option>
                         <option value="Social Sciences">Social Sciences</option>
+                        <option value="World History">World History</option>
                     </select>
                 </div>
                 <br />
@@ -156,7 +156,7 @@ export default function CreatePost() {
 
             {showModal ? (
                 <>
-                
+
                     <div
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
                         ref={searchModal}

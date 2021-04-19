@@ -164,7 +164,7 @@ export default function Post() {
                                         console.log(body)
                                         makeComment(body, userPost._id)
                                     }}>
-                                        <div class="flex flex-wrap -mx-3 mb-6">
+                                        <div class="flex flex-wrap -mx-3 mb-6 ">
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>
                                             <div class="w-full md:w-full px-3 mb-2 mt-2">
                                                 <div className="App">
@@ -232,7 +232,7 @@ export default function Post() {
                                                         :
                                                         "loading"
                                                     }   &nbsp;
-                                                    {userPost.commentLikes.length ? userPost.commentLikes.length : 0} likes
+                                                    {/* {userPost.commentLikes.length ? userPost.commentLikes.length : 0} likes */}
                                                 </span>
                                             </>
                                         )
