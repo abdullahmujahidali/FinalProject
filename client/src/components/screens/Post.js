@@ -40,7 +40,7 @@ export default function Post() {
                 console.log(result)
                 const newData = data.map(item => {
                     if (item._id === result._id) {
-                        
+                        refreshPage();
                         return result
                     }
                     else {

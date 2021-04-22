@@ -5,6 +5,9 @@ import parse from "html-react-parser"
 import { UserContext } from "../../App"
 import Spinner from "./spinner.gif"
 export default function PostHome() {
+  function refreshPage() {
+    window.location.reload();
+  }
   const [data, setData] = useState([])
   const { state } = useContext(UserContext)
   useEffect(() => {
@@ -49,6 +52,7 @@ export default function PostHome() {
         const newData = data.map(item => {
           if (item._id === result._id) {
             console.log(result)
+            refreshPage();
             return result
           }
           else {
@@ -74,6 +78,7 @@ export default function PostHome() {
       })
     }).then(res => res.json())
       .then(result => {
+        refreshPage();
         console.log(result)
         const newData = data.map(item => {
           if (item._id === result._id) {

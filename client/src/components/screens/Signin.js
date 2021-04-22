@@ -3,14 +3,13 @@ import { useHistory, Link } from "react-router-dom"
 import { UserContext } from "../../App"
 
 import logoP from "../assets/logoBlack.png"
-import M from "materialize-css"
+import M, { toast } from "materialize-css"
 import FooterSmall from "../FooterSmall.js";
-import Toasts from 'toasts';
-
-import "../../App.css"
+import { useToasts } from 'react-toast-notifications'
+// import "../../App.css"
 
 export default function SignIn() {
-
+  const { addToast } = useToasts()
   const { dispatch } = useContext(UserContext)
   const history = useHistory()
   const [email, setEmail] = useState("")
@@ -19,6 +18,10 @@ export default function SignIn() {
 
     if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
       M.toast({ html: 'Invalid email', classes: '#0000FF' })
+      addToast('Sign in Success', {
+        appearance: 'success'
+      })
+     
       alert("Invalid email");
       return
     }
@@ -34,13 +37,21 @@ export default function SignIn() {
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
-           M.toast({html: data.error,classes:'#0d47a1 red darken-3'})
+          addToast('Sign in Success', {
+            appearance: 'success'
+          })
+
+          M.toast({ html: data.error, classes: '#0d47a1 red darken-3' })
         }
         else {
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
           dispatch({ type: "USER", payload: data.user })
-          M.toast({ html: "Login Success", classes: 'rounded' });
+          addToast('Sign in Success', {
+            appearance: 'success'
+          })
+
+          // M.toast({ html: "Login Success", classes: 'rounded' });
           history.push('/home')
         }
       }).catch(err => {

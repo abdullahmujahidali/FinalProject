@@ -293,18 +293,18 @@ router.post("/signup", (req, res) => {
             intro
           })
           user.save()
-            .then(user => {
-              transporter.sendMail({
-                  to: user.email,
-                  from: "umtfyp2020@gmail.com",
-                  subject: "Sign up Success",
-                  html: htmlTemplate
-              })
-              res.json({ message: user.name + ' joined BigBrains' })
-            })
-            .catch(err => {
-              console.log(err)
-            })
+            // .then(user => {
+            //   transporter.sendMail({
+            //       to: user.email,
+            //       from: "umtfyp2020@gmail.com",
+            //       subject: "Sign up Success",
+            //       html: htmlTemplate
+            //   })
+            //   res.json({ message: user.name + ' joined BigBrains' })
+            // })
+            // .catch(err => {
+            //   console.log(err)
+            // })
         })
 
     }).catch(err => {

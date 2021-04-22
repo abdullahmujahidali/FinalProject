@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useEffect, useContext } from "react"
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom"
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import NavBar from "./components/Navbar"
 import Landing from "./components/screens/Landing"
 import Signin from "./components/screens/Signin"
@@ -14,9 +15,10 @@ import Subscribed from "./components/screens/SubscribedPost"
 import Reset from "./components/screens/Reset"
 import NewPassword from "./components/screens/NewPassword"
 import SubjectPost from "./components/screens/SubjectPost"
-
-
 import CreatePost from "./components/screens/CreatePost"
+import { ToastProvider, useToasts } from 'react-toast-notifications';
+
+
 import { reducer, initialState } from "./reducers/userReducer"
 
 export const UserContext = createContext()
@@ -92,12 +94,20 @@ const Routing = () => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   return (
+    <ToastProvider
+    autoDismiss
+    autoDismissTimeout={4000}
+    // components={{ Toast: Snack }}
+    placement="center"
+  >
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <NavBar />
         <Routing />
       </BrowserRouter>
-    </UserContext.Provider>);
+    </UserContext.Provider>
+    </ToastProvider>
+    );
 }
 
 export default App;
