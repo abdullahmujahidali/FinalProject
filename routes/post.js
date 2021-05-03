@@ -6,7 +6,7 @@ const User = mongoose.model("User")
 var dateFormat = require("dateformat");
 var now = new Date();
 const requireLogin = require("../middleware/requireLogin")
-router.get("/allpost", requireLogin, (req, res) => {
+router.get("/allpost", (req, res) => {
     Post.find()
         .populate("postedBy", "_id name pic role organization")
         .sort("-createdAt")
