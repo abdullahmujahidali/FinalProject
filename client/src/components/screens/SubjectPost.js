@@ -119,7 +119,7 @@ export default function PostHome() {
                                                 setShowModal(false)
                                             }}> <li className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"><p><strong>{item.subject}:   </strong></p> &nbsp; &nbsp;  {item.title}</li></Link>
                                         })
-                                        : "No Post with the subject"
+                                        : <h1 >No Post with the subject </h1>
                                         }
 
 

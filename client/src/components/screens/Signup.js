@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom"
 import { useToasts } from 'react-toast-notifications'
-import M from "materialize-css"
 
 export default function Signup() {
     const history = useHistory()
@@ -13,21 +12,30 @@ export default function Signup() {
     const [role, setRole] = useState("")
     const [intro, setIntro] = useState("")
     const [image, setImage] = useState("")
+    const { addToast } = useToasts()
     const [url, setUrl] = useState(undefined)
     useEffect(() => {
         if (url) {
             uploadFields()
         }
     })
+
+    useEffect(() => {
+        console.log("hit!")
+        addToast('Invalid Email', {
+            appearance: 'error'
+        })
+    }, [])
     const uploadPic = () => {
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "bigbrain")
         data.append("cloud_name", "bigbrain")
         if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-            // alert.show("Oh look, an alert!");
-            M.toast({ html: 'Invalid email', classes: '#fff' })
-            alert("Invalid email");
+            console.log(email)
+            addToast('Invalid Email', {
+                appearance: 'error'
+            })
             return
         }
         fetch("https://api.cloudinary.com/v1_1/bigbrain/image/upload", {
@@ -45,6 +53,13 @@ export default function Signup() {
 
     }
     const uploadFields = () => {
+        if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+            console.log(email)
+            addToast('Invalid Email', {
+              appearance: 'error'
+            })
+            return
+          }
         fetch('/signup', {
             method: "post",
             headers: {
@@ -63,10 +78,14 @@ export default function Signup() {
         }).then(res => res.json())
             .then(data => {
                 if (data.error) {
-                    M.toast({ html: data.error, classes: "#004d40 teal darken-4" })
+                    addToast('Error Encountered', {
+                        appearance: 'error'
+                    })
                 }
                 else {
-                    M.toast({ html: data.message, classes: "#000000 black white-text" })
+                    addToast('User has joined Big Brains', {
+                        appearance: 'success'
+                    })
                     history.push("/signin")
                 }
             }).catch(err => {
@@ -85,53 +104,50 @@ export default function Signup() {
 
     return (
         <>
-            <div class="font-sans antialiased bg-grey-lightest">
-
-
-
-                <div class="w-full bg-grey-lightest" style={{ paddingTop: "4rem;" }}>
-                    <div class="container mx-auto py-4">
-                        <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
-                            <div class="py-4 px-8 text-black text-xl border-b border-grey-lighter">Register for a free account</div>
-                            <div class="py-4 px-8">
-                                <div class="flex mb-4">
-                                    <div class="w-1/2 mr-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="first_name">Full Name</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="Your Full Name" value={name}
+            <div className="font-sans antialiased bg-grey-lightest">
+                <div className="w-full bg-grey-lightest" style={{ paddingTop: "4rem;" }}>
+                    <div className="container mx-auto py-4">
+                        <div className="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
+                            <div className="py-4 px-8 text-black text-xl border-b border-grey-lighter">Register for a free account</div>
+                            <div className="py-4 px-8">
+                                <div className="flex mb-4">
+                                    <div className="w-1/2 mr-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="first_name">Full Name</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="Your Full Name" value={name}
                                             onChange={(e) => setName(e.target.value)} />
                                     </div>
-                                    <div class="w-1/2 ml-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="email">Email</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="email" placeholder="Your Email" value={email}
+                                    <div className="w-1/2 ml-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="email">Email</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="email" placeholder="Your Email" value={email}
                                             onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="flex mb-4">
-                                    <div class="w-1/2 mr-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="password">Password</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" placeholder="Your Password " value={password}
+                                <div className="flex mb-4">
+                                    <div className="w-1/2 mr-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="password">Password</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" placeholder="Your Password " value={password}
                                             onChange={(e) => setPassword(e.target.value)} />
                                     </div>
-                                    <div class="w-1/2 ml-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="last_name">Country</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="country" type="text" placeholder="Your Country" value={country}
+                                    <div className="w-1/2 ml-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="last_name">Country</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="country" type="text" placeholder="Your Country" value={country}
                                             onChange={(e) => setCountry(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="flex mb-4">
-                                    <div class="w-1/2 mr-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="first_name">Organization</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="organization" type="text" placeholder="Your Orgaization" value={organization}
+                                <div className="flex mb-4">
+                                    <div className="w-1/2 mr-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="first_name">Organization</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="organization" type="text" placeholder="Your Orgaization" value={organization}
                                             onChange={(e) => setOrganization(e.target.value)} />
                                     </div>
-                                    <div class="w-1/2 ml-1">
-                                        <label class="block text-grey-darker text-sm font-bold mb-2" for="last_name">Role</label>
-                                        <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="role" type="text" placeholder="Your Role" value={role}
+                                    <div className="w-1/2 ml-1">
+                                        <label className="block text-grey-darker text-sm font-bold mb-2" for="last_name">Role</label>
+                                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="role" type="text" placeholder="Your Role" value={role}
                                             onChange={(e) => setRole(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="mb-4">
-                                    <label class="block text-grey-darker text-sm font-bold mb-2" for="last_name">Introduce Yourself</label>
+                                <div className="mb-4">
+                                    <label className="block text-grey-darker text-sm font-bold mb-2" for="last_name">Introduce Yourself</label>
                                     <textarea
                                         rows="2"
                                         cols="50"
@@ -141,7 +157,7 @@ export default function Signup() {
                                         placeholder="Write a few words..."
                                     />
                                 </div>
-                                <div class="overflow-hidden relative w-64 mt-4 mb-4">
+                                <div className="overflow-hidden relative w-64 mt-4 mb-4">
                                     <label className=" flex flex-col items-center px-2 py-2 bg-black text-white rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
                                         <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                             <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
@@ -163,8 +179,8 @@ export default function Signup() {
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center my-4">
-                            <Link to="/signin" class="text-grey-dark text-sm no-underline hover:text-grey-darker">I already have an account</Link>
+                        <p className="text-center my-4">
+                            <Link to="/signin" className="text-grey-dark text-sm no-underline hover:text-grey-darker">I already have an account</Link>
                         </p>
                     </div>
                 </div>

@@ -31,7 +31,6 @@ router.put("/follow",requireLogin,(req,res)=>{
     },(err,result)=>{
         if(err){
             return res.status(422).json({error:err})
-    
         }
         User.findByIdAndUpdate(req.user._id,{
             $push:{following:req.body.followId}
@@ -41,7 +40,6 @@ router.put("/follow",requireLogin,(req,res)=>{
             return res.status(422).json({error:err})
         })
     }
-    
     )
 })
 

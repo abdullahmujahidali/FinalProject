@@ -25,7 +25,6 @@ export const UserContext = createContext()
 const Routing = () => {
   const history = useHistory()
   const {state,dispatch } = useContext(UserContext)
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"))
     if (user) {
@@ -40,9 +39,7 @@ const Routing = () => {
   }, [history, dispatch])
   return (
     <Switch>
-      <Route exact path="/">
-        <Landing />
-      </Route>
+    
 
       <Route path="/signin">
         <Signin />
@@ -86,7 +83,9 @@ const Routing = () => {
       <Route path="/reset/:token">
         <NewPassword />
       </Route>
-
+      <Route exact path="/">
+        <Landing />
+      </Route>
     </Switch>
   )
 }
@@ -96,7 +95,7 @@ function App() {
   return (
     <ToastProvider
     autoDismiss
-    autoDismissTimeout={4000}
+    autoDismissTimeout={100000}
     // components={{ Toast: Snack }}
     placement="center"
   >

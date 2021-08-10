@@ -5,8 +5,11 @@ const Post = mongoose.model("Post")
 const User = mongoose.model("User")
 var dateFormat = require("dateformat");
 var now = new Date();
+
 const requireLogin = require("../middleware/requireLogin")
+
 router.get("/allpost", (req, res) => {
+
     Post.find()
         .populate("postedBy", "_id name pic role organization")
         .sort("-createdAt")
@@ -17,7 +20,9 @@ router.get("/allpost", (req, res) => {
             console.log(err)
         })
 })
+
 router.post("/createpost", requireLogin, (req, res) => {
+
     const { subject, title, body, photo } = req.body
     if (!title || !subject || !body) {
         return res.status(422).json({ error: "Please add all fields" })
@@ -39,7 +44,9 @@ router.post("/createpost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
+
 router.get("/getsubpost", requireLogin, (req, res) => {
+    
     Post.find({ postedBy: { $in: req.user.following } })
         .populate("postedBy", "_id name pic role organization")
         .sort("-createdAt")
@@ -50,6 +57,7 @@ router.get("/getsubpost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
+
 router.get("/mypost", requireLogin, (req, res) => {
     Post.find({ postedBy: req.user._id })
         .populate("PostedBy", "_id name pic role organization intro country")
@@ -60,6 +68,7 @@ router.get("/mypost", requireLogin, (req, res) => {
             console.log(err)
         })
 })
+
 router.get("/post/:id", requireLogin, (req, res) => {
     Post.findOne({ _id: req.params.id })
         .populate("comments.postedBy", "_id name pic")
@@ -101,13 +110,13 @@ router.get("/user/:id", requireLogin, (req, res) => {
             return res.json(404).json({ error: "User not found" })
         })
 })
+
+
 router.put("/like", requireLogin, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         $push: {
-            likes: req.user._id,
-            ranking: req.user._id
+            likes: req.user._id
         }
-
     }, {
         new: true
     }).exec((err, result) => {
@@ -120,13 +129,13 @@ router.put("/like", requireLogin, (req, res) => {
     })
 })
 
+
 router.put("/unlike", requireLogin, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         $pull: {
             likes: req.user._id,
             ranking: req.user._id
         }
-
     }, {
         new: true
     }).exec((err, result) => {
@@ -148,7 +157,6 @@ router.put("/comment", requireLogin, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         // $push:{commentlikes:req.user._id},
         $push: { comments: comment }
-
     }, {
         new: true
     })
@@ -163,7 +171,9 @@ router.put("/comment", requireLogin, (req, res) => {
             }
         })
 })
+
 router.delete("/deletepost/:postId", requireLogin, (req, res) => {
+
     Post.findOne({ _id: req.params.postId })
         .populate("postedBy", "_id")
         .exec((err, post) => {
@@ -180,6 +190,8 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
             }
         })
 })
+
+
 router.post("/search-post", (req, res) => {
     let userPattern = new RegExp("^" + req.body.query)
     Post.find({ title: { $regex: userPattern } })
@@ -192,6 +204,8 @@ router.post("/search-post", (req, res) => {
             console.log(err)
         })
 })
+
+
 router.post("/search-subject", (req, res) => {
     let userPattern = new RegExp("^" + req.body.query)
     Post.find({ subject: { $regex: userPattern } })
@@ -204,6 +218,8 @@ router.post("/search-subject", (req, res) => {
             console.log(err)
         })
 })
+
+
 router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
     const comment = { _id: req.params.comment_id };
     console.log(comment)
@@ -222,12 +238,13 @@ router.delete("/deletecomment/:id/:comment_id", requireLogin, (req, res) => {
             if (err || !postComment) {
                 return res.status(422).json({ error: err });
             } else {
-
                 const result = postComment;
                 res.json(result);
             }
         });
 });
+
+
 router.put("/likecomment/:id/:comment_id", requireLogin, (req, res) => {
     const comment = { _id: req.params.comment_id };
     console.log(req.params.comment_id)

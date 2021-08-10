@@ -12,7 +12,6 @@ const crypto = require("crypto")
 const { SENDGRID_API, EMAIL } = require("../config/keys")
 
 let htmlTemplate = `
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -270,8 +269,18 @@ const transporter = nodemailer.createTransport(sendgridTransport({
     api_key: SENDGRID_API
   }
 }))
+
+
+
 router.post("/signup", (req, res) => {
   const { name, email, password, country, organization, role, intro, pic } = req.body
+
+  var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+  var valid = emailRegex.test(email);
+  if (!valid) {
+    console.log(email)
+    return res.status(422).json({ error: "Invalid email entered" })
+  }
   if (!email || !password || !name) {
     return res.status(422).json({ error: "Please add all the fields" })
   }
@@ -293,24 +302,26 @@ router.post("/signup", (req, res) => {
             intro
           })
           user.save()
-            // .then(user => {
-            //   transporter.sendMail({
-            //       to: user.email,
-            //       from: "umtfyp2020@gmail.com",
-            //       subject: "Sign up Success",
-            //       html: htmlTemplate
-            //   })
-            //   res.json({ message: user.name + ' joined BigBrains' })
-            // })
-            // .catch(err => {
-            //   console.log(err)
-            // })
+            .then(user => {
+              // transporter.sendMail({
+              //   to: user.email,
+              //   from: "umtfyp2020@gmail.com",
+              //   subject: "Sign up Success",
+              //   html: htmlTemplate
+              // })
+              console.log(user)
+              res.json({ message: user.name + ' joined BigBrains' })
+            })
+            .catch(err => {
+              console.log(err)
+            })
         })
 
     }).catch(err => {
       console.log(err)
     })
 })
+
 
 router.post("/signin", (req, res) => {
   const { email, password } = req.body

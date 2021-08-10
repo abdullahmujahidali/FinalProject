@@ -26,7 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.2.1",
-    "react-toast-notifications": "^2.4.3",
+    "react-toast-notifications": "^2.5.1",
     "react-toastify": "^7.0.3",
     "styled-components": "^5.2.1",
     "tailwind-toast": "^1.0.5",
